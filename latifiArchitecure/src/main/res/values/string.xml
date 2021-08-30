@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">majaziland</string>
+
+
+    <string name="internetNotAvailable">اینترنت در دسترس نمیباشد</string>
+    <string name="networkError">خطای ارتباط با سرور، ممکن است سرور در حال بروزرسانی باشد، لطفا لحظات دیگری تلاش کنید</string>
+    <string name="readTheTextBelow">متن زیر را در هنگام ضبط فیلم بخوانید.</string>
+    <string name="doubleExit">برای خروج 2 بار کلید بازگشت را بزنید</string>
+    <string name="titleVideoRecording">متن زیر را در هنگام فیلم برداری بخوانید</string>
+    <string name="waiting">شکیبا باشید</string>
+    <string name="chooseDate">انتخاب تاریخ</string>
+    <string name="cancel">بستن</string>
+    <string name="todayDate">تاریخ امروز</string>
+    <string name="readSharedPreferencesError">خطای خواندن توکن</string>
+
+    <string name="sharedPreferencesTheme">themeSharedPreferences</string>
+    <string name="sharedPreferencesBlurry">blurry</string>
+    <string name="sharedPreferencesToken">token</string>
+
+
+
+    <string name="cancel_label">Cancel</string>
+    <string name="ok_label">Ok</string>
+
+    <string name="settings_video_quality_title">Video size %s</string>
+    <string name="settings_photo_quality_title">Photo size</string>
+
+    <!-- Preview Activity -->
+    <string name="preview_controls_confirm">Save</string>
+    <string name="preview_controls_retake">Repeat</string>
+    <string name="preview_controls_cancel">Cancel</string>
+    <string name="preview_controls_crop">Crop</string>
+    <string name="preview">preview</string>
+
+
+    <string name="reset">Reset</string>
+    <string name="switch_camera">Switch</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="done">Done</string>
+    <string name="video_path">Video path:</string>
+    <string name="video_too_short">Video is too short.</string>
+    <string name="initiating">Initiating…</string>
+    <string name="processing">Processing…</string>
+    <string name="please_wait">Please wait</string>
+    <string name="permissions_denied_exit">Permissions denied, exit.</string>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="ML_Transparent">#00FFFFFF</color>
+    <color name="dayRecyclerLoadingBack">#268FBEF8</color>
+    <color name="dayRecyclerLoading">#4D8FBEF8</color>
+
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray_4">#DCDCDC</color>
+    <color name="gray_5">#CDCDCD</color>
+    <color name="gray_6">#c7c7c7</color>
+    <color name="gray_12">#5C5C5C</color>
+    <color name="gray_13">#383838</color>
+    <color name="gray_14">#252525</color>
+    <color name="black">#000000</color>
+    <color name="red">#F10D0D</color>
+
+</resources>
