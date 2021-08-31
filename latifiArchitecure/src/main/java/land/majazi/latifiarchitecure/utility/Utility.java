@@ -805,4 +805,66 @@ public class Utility {
     //______________________________________________________________________________________________ getString
 
 
+
+    //______________________________________________________________________________________________ getDeviceName
+    public String getDeviceName() {
+        try {
+            String manufacturer = Build.MANUFACTURER;
+            String model = Build.MODEL;
+            model.replaceAll("-", "_");
+            if (model.startsWith(manufacturer)) {
+                return capitalize(model);
+            } else {
+                return capitalize(manufacturer) + " " + model;
+            }
+        } catch (Exception e) {
+            return "DeviceName : I could not access the Device Name";
+        }
+    }
+    //______________________________________________________________________________________________ getDeviceName
+
+
+
+    //______________________________________________________________________________________________ capitalize
+    private String capitalize(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) {
+            return s;
+        } else {
+            return Character.toUpperCase(first) + s.substring(1);
+        }
+    }
+    //______________________________________________________________________________________________ capitalize
+
+
+
+    //______________________________________________________________________________________________ getAndroidVersion
+    public String getAndroidVersion() {
+        try {
+            String release = Build.VERSION.RELEASE;
+            int sdkVersion = Build.VERSION.SDK_INT;
+            return "Android Version : " + release + " (SDK : " + release + ")";
+        } catch (Exception e) {
+            return "Android Version : I could not access the Android Version";
+        }
+    }
+    //______________________________________________________________________________________________ getAndroidVersion
+
+
+
+    //______________________________________________________________________________________________ getDeviceLanguage
+    public String getDeviceLanguage() {
+        try {
+            String languesge = Locale.getDefault().getDisplayLanguage();
+            return "Device Language : " + languesge;
+        } catch (Exception e) {
+            return "Device Language : I could not access the Device Language";
+        }
+    }
+    //______________________________________________________________________________________________ getDeviceLanguage
+
+
 }
