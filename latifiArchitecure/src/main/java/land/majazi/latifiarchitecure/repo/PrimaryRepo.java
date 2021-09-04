@@ -76,6 +76,20 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ sendRequest
 
 
+    //______________________________________________________________________________________________ validationError
+    public MutableLiveData<PrimaryModel> validationError() {
+        PrimaryModel primaryModel = new PrimaryModel();
+        primaryModel.setError(true);
+        primaryModel.setResponseCode(2);
+        primaryModel.setMessage(getActivity().getResources().getString(R.string.validationError));
+        MutableLiveData<PrimaryModel> liveData = new MutableLiveData<>();
+        liveData.setValue(primaryModel);
+        return liveData;
+    }
+    //______________________________________________________________________________________________ validationError
+
+
+
     //______________________________________________________________________________________________ getErrorMessage
     private PrimaryModel getErrorMessage(Response response) {
         Utility utility = new Utility();

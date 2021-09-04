@@ -14,6 +14,7 @@
     <string name="cancel">بستن</string>
     <string name="todayDate">تاریخ امروز</string>
     <string name="readSharedPreferencesError">خطای خواندن توکن</string>
+    <string name="validationError">پارامترها نامعتبر است</string>
 
     <string name="sharedPreferencesTheme">themeSharedPreferences</string>
     <string name="sharedPreferencesBlurry">blurry</string>
