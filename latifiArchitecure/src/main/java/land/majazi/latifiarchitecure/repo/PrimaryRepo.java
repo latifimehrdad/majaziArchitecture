@@ -34,6 +34,21 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ PrimaryRepo
 
 
+
+    //______________________________________________________________________________________________ unAuthorization
+    public MutableLiveData<PrimaryModel> unAuthorization() {
+        PrimaryModel primaryModel = new PrimaryModel();
+        primaryModel.setError(true);
+        primaryModel.setResponseCode(401);
+        primaryModel.setMessage(getActivity().getResources().getString(R.string.unAuthorization));
+        MutableLiveData<PrimaryModel> liveData = new MutableLiveData<>();
+        liveData.setValue(primaryModel);
+        return liveData;
+    }
+    //______________________________________________________________________________________________ unAuthorization
+
+
+
     //______________________________________________________________________________________________ sendRequest
     public MutableLiveData<PrimaryModel> sendRequest(Call primaryCall, boolean hideKeyboard) {
 
