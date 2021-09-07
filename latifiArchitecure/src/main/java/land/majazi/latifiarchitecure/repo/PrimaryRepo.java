@@ -9,6 +9,8 @@ import android.os.Build;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,6 +20,7 @@ import java.util.Locale;
 
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.models.PrimaryModel;
+import land.majazi.latifiarchitecure.models.RP_Primary;
 import land.majazi.latifiarchitecure.utility.Utility;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +37,6 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ PrimaryRepo
 
 
-
     //______________________________________________________________________________________________ unAuthorization
     public MutableLiveData<PrimaryModel> unAuthorization() {
         PrimaryModel primaryModel = new PrimaryModel();
@@ -46,7 +48,6 @@ public class PrimaryRepo {
         return liveData;
     }
     //______________________________________________________________________________________________ unAuthorization
-
 
 
     //______________________________________________________________________________________________ sendRequest
@@ -89,7 +90,6 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ validationError
 
 
-
     //______________________________________________________________________________________________ getErrorMessage
     private PrimaryModel getErrorMessage(Response response) {
         Utility utility = new Utility();
@@ -109,7 +109,11 @@ public class PrimaryRepo {
         if (!response.isSuccessful() || response.body() == null) {
             return new PrimaryModel(response.code(), true, responseErrorMessage(response), null);
         } else {
-            return new PrimaryModel(response.code(), false, null, response.body());
+            RP_Primary rp_primary = (RP_Primary) response.body();
+            if (rp_primary.isSuccess())
+                return new PrimaryModel(response.code(), false, null, response.body());
+            else
+                return new PrimaryModel(1, true, rp_primary.getMessage(), response.body());
         }
     }
     //______________________________________________________________________________________________ checkResponseIsNotNull
@@ -170,7 +174,6 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ getContext
 
 
-
     //______________________________________________________________________________________________ getSharedPreferences
     public SharedPreferences getSharedPreferences(String appName) {
 
@@ -182,7 +185,6 @@ public class PrimaryRepo {
 
     }
     //______________________________________________________________________________________________ getSharedPreferences
-
 
 
     //______________________________________________________________________________________________ capitalize
@@ -213,7 +215,6 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ getAndroidVersion
 
 
-
     //______________________________________________________________________________________________ getDeviceName
     public String getDeviceName() {
         try {
@@ -232,7 +233,6 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ getDeviceName
 
 
-
     //______________________________________________________________________________________________ getDeviceLanguage
     public String getDeviceLanguage() {
         try {
@@ -243,7 +243,6 @@ public class PrimaryRepo {
         }
     }
     //______________________________________________________________________________________________ getDeviceLanguage
-
 
 
     //______________________________________________________________________________________________ saveBlurry
@@ -269,7 +268,6 @@ public class PrimaryRepo {
         return shared.getBoolean(getActivity().getResources().getString(R.string.sharedPreferencesBlurry), false);
     }
     //______________________________________________________________________________________________ getBlurry
-
 
 
     //______________________________________________________________________________________________ saveTheme
@@ -319,7 +317,6 @@ public class PrimaryRepo {
     //______________________________________________________________________________________________ getAppTheme
 
 
-
     //______________________________________________________________________________________________ changeTheme
     public void changeTheme(String appName) {
 
@@ -348,7 +345,6 @@ public class PrimaryRepo {
 
     }
     //______________________________________________________________________________________________ changeDeviceTheme
-
 
 
 }
