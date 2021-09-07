@@ -4,16 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,30 +14,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import androidx.core.content.FileProvider;
-
-import com.facebook.drawee.drawable.ProgressBarDrawable;
-import com.facebook.drawee.generic.RoundingParams;
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import land.majazi.latifiarchitecure.models.MD_GregorianDate;
-import land.majazi.latifiarchitecure.models.MD_ImageSize;
 import land.majazi.latifiarchitecure.models.MD_SolarDate;
-import land.majazi.latifiarchitecure.utility.compress.video.ML_VideoSlimmer;
-
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO;
 
 public class Utility {
 
@@ -694,36 +669,6 @@ public class Utility {
     }
     //______________________________________________________________________________________________ leapYear
 
-
-    //______________________________________________________________________________________________ setRoundCircleImage
-    public void setRoundCircleImage(SimpleDraweeView simpleDraweeView, int borderColor, float borderWidth) {
-        RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
-        roundingParams.setBorder(borderColor, borderWidth);
-        roundingParams.setRoundAsCircle(true);
-        simpleDraweeView.getHierarchy().setRoundingParams(roundingParams);
-    }
-    //______________________________________________________________________________________________ setRoundCircleImage
-
-
-    //______________________________________________________________________________________________ setRoundImage
-    public void setRoundImage(SimpleDraweeView simpleDraweeView, int borderColor, float borderWidth, float topLeft, float topRight, float bottomLeft, float bottomRight) {
-        RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
-        roundingParams.setBorder(borderColor, borderWidth);
-        roundingParams.setCornersRadii(topLeft, topRight, bottomRight, bottomLeft);
-        simpleDraweeView.getHierarchy().setRoundingParams(roundingParams);
-    }
-    //______________________________________________________________________________________________ setRoundImage
-
-
-    //______________________________________________________________________________________________ setProgressBarForLoadImage
-    public void setProgressBarForLoadImage(SimpleDraweeView simpleDraweeView, int barColor, int backColor, int radius) {
-        ProgressBarDrawable progressBarDrawable = new ProgressBarDrawable();
-        progressBarDrawable.setColor(barColor);
-        progressBarDrawable.setBackgroundColor(backColor);
-        progressBarDrawable.setRadius(radius);
-        simpleDraweeView.getHierarchy().setProgressBarImage(progressBarDrawable);
-    }
-    //______________________________________________________________________________________________ setProgressBarForLoadImage
 
 
     //______________________________________________________________________________________________ getValidations
