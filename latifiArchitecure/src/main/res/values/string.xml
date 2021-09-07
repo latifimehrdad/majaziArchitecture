@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">majaziland</string>
-
     <string name="unAuthorization">لطفا مجدد وارد برنامه شوید</string>
     <string name="internetNotAvailable">اینترنت در دسترس نمیباشد</string>
     <string name="networkError">خطای ارتباط با سرور، ممکن است سرور در حال بروزرسانی باشد، لطفا لحظات دیگری تلاش کنید</string>

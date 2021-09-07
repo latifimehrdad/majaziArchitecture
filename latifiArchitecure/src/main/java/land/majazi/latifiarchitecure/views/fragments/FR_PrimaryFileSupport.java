@@ -31,10 +31,12 @@ public class FR_PrimaryFileSupport extends FR_Primary {
     private Dialog chooseImageDialog;
     private Dialog cropImageDialog;
     private Uri uriFromCamera;
+    private static String applicationName;
 
 
     //______________________________________________________________________________________________ showDialogChooseImage
-    public void showDialogChooseImage(String title) {
+    public void showDialogChooseImage(String title, String appName) {
+        applicationName = appName;
         if (chooseImageDialog != null) {
             chooseImageDialog.dismiss();
             chooseImageDialog = null;
@@ -74,8 +76,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         FileController fileController = new FileController();
-        String appName = getContext().getResources().getString(R.string.app_name);
-        uriFromCamera = fileController.getOutputMediaFileUri(getActivity(), appName, MEDIA_TYPE_IMAGE);
+        uriFromCamera = fileController.getOutputMediaFileUri(getActivity(), applicationName, MEDIA_TYPE_IMAGE);
         fileController = null;
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFromCamera);
         startActivityForResult(cameraIntent, REQUEST_CHOOSE_PICTURE);
@@ -88,10 +89,10 @@ public class FR_PrimaryFileSupport extends FR_Primary {
 
 
     //______________________________________________________________________________________________ takeVideo
-    public void takeVideo(String message) {
-
+    public void takeVideo(String message, String appName) {
+        applicationName = appName;
         FileController fileController = new FileController();
-        File fileFromCamera = fileController.getOutputMediaFile(MEDIA_TYPE_VIDEO, getResources().getString(R.string.app_name));
+        File fileFromCamera = fileController.getOutputMediaFile(MEDIA_TYPE_VIDEO, applicationName);
         uriFromCamera = fileController.getUriFromFile(getContext(), fileFromCamera);
         fileController = null;
         Intent intent = new Intent(getContext(), RecordVideo.class);
@@ -170,8 +171,6 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         imageViewRotateLeft.setOnClickListener(v -> mCropView.rotateImage(CropImageView.RotateDegrees.ROTATE_M90D));
         imageViewRotateRight.setOnClickListener(v -> mCropView.rotateImage(CropImageView.RotateDegrees.ROTATE_90D));
 
-        String appName = getContext().getResources().getString(R.string.app_name);
-
         ml_buttonCrop.setOnClickListener(v -> {
             ml_buttonCrop.setEnabled(false);
             ml_buttonCrop.setTitle("درحال آماده سازی...");
@@ -183,7 +182,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
                         public void onSuccess(Bitmap cropped) {
                             FileController fileController = new FileController();
                             mCropView.save(cropped)
-                                    .execute(fileController.createSaveUri(getContext(), appName), mSaveCallback);
+                                    .execute(fileController.createSaveUri(getContext(), applicationName), mSaveCallback);
                         }
 
                         @Override
@@ -199,8 +198,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
 
 
     //______________________________________________________________________________________________ saveBitmap
-    public void saveBitmap(Bitmap bitmap) {
-        String appName = getContext().getResources().getString(R.string.app_name);
+    public void saveBitmap(Bitmap bitmap, String appName) {
         FileController fileController = new FileController();
         CropImageView mCropView = new CropImageView(getContext());
         mCropView.save(bitmap)
