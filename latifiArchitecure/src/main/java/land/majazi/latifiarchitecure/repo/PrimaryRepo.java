@@ -106,7 +106,7 @@ public class PrimaryRepo {
 
     //______________________________________________________________________________________________ checkResponseIsNotNull
     private PrimaryModel checkResponseIsNotNull(Response response) {
-        if (!response.isSuccessful() || response.body() == null) {
+        if (!response.isSuccessful() || response.body() == null || response.code()!=200) {
             return new PrimaryModel(response.code(), true, responseErrorMessage(response), null);
         } else {
             RP_Primary rp_primary = (RP_Primary) response.body();
