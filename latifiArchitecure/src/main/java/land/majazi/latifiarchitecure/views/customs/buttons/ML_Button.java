@@ -229,9 +229,10 @@ public class ML_Button extends LinearLayout {
                 }
                 textView.setText(waitText);
             }
-            gifImageView.setVisibility(VISIBLE);
-            imageIcon.setVisibility(GONE);
         }
+
+        gifImageView.setVisibility(VISIBLE);
+        imageIcon.setVisibility(GONE);
 
     }
     //______________________________________________________________________________________________ startLoading
