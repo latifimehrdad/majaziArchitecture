@@ -51,7 +51,7 @@ public class PrimaryRepo {
 
 
     //______________________________________________________________________________________________ sendRequest
-    public MutableLiveData<PrimaryModel> sendRequest(Call primaryCall, boolean hideKeyboard) {
+    public MutableLiveData<PrimaryModel> sendRequest(Call primaryCall, boolean hideKeyboard, boolean token) {
 
         final MutableLiveData<PrimaryModel> mutableLiveData = new MutableLiveData<>();
 
@@ -63,12 +63,12 @@ public class PrimaryRepo {
         primaryCall.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                mutableLiveData.setValue(getErrorMessage(response));
+                mutableLiveData.setValue(getErrorMessage(response, token));
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                mutableLiveData.setValue(getErrorMessage(null));
+                mutableLiveData.setValue(getErrorMessage(null, token));
             }
         });
 
@@ -91,7 +91,7 @@ public class PrimaryRepo {
 
 
     //______________________________________________________________________________________________ getErrorMessage
-    private PrimaryModel getErrorMessage(Response response) {
+    private PrimaryModel getErrorMessage(Response response, boolean token) {
         Utility utility = new Utility();
         if (response == null)
             if (utility.isInternetConnected(activity))
@@ -99,18 +99,18 @@ public class PrimaryRepo {
             else
                 return new PrimaryModel(404, true, activity.getResources().getString(R.string.internetNotAvailable), null);
         else
-            return checkResponseIsNotNull(response);
+            return checkResponseIsNotNull(response, token);
     }
     //______________________________________________________________________________________________ getErrorMessage
 
 
     //______________________________________________________________________________________________ checkResponseIsNotNull
-    private PrimaryModel checkResponseIsNotNull(Response response) {
-        if (!response.isSuccessful() || response.body() == null || response.code()!=200) {
+    private PrimaryModel checkResponseIsNotNull(Response response, boolean token) {
+        if (!response.isSuccessful() || response.body() == null) {
             return new PrimaryModel(response.code(), true, responseErrorMessage(response), null);
         } else {
             RP_Primary rp_primary = (RP_Primary) response.body();
-            if (rp_primary.isSuccess())
+            if (rp_primary.isSuccess() || token)
                 return new PrimaryModel(response.code(), false, null, response.body());
             else
                 return new PrimaryModel(1, true, rp_primary.getMessage(), response.body());
