@@ -82,11 +82,9 @@ public class ML_Button extends LinearLayout {
             configTextView();
             configDelimiterLayout();
             configIcon();
-            if (waitText != null)
-                configGif();
+            configGif();
         } else {
-            if (waitText != null)
-                configGif();
+            configGif();
             configIcon();
             configDelimiterLayout();
             configTextView();
