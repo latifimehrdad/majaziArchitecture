@@ -216,6 +216,7 @@
         </attr>
         <attr name="text"/>
         <attr name="waitingText" format="string"/>
+        <attr name="ml_enableLoading" format="boolean"/>
 
     </declare-styleable>
 

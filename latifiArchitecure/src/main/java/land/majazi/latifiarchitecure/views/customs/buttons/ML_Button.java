@@ -39,7 +39,7 @@ public class ML_Button extends LinearLayout {
     private int textColor;
     private int textWaitingColor;
     private int iconDirection;
-
+    private boolean enableLoading = true;
     private boolean click;
 
     //______________________________________________________________________________________________ ML_Button
@@ -75,6 +75,7 @@ public class ML_Button extends LinearLayout {
         click = false;
         iconDirection = ta.getInt(R.styleable.ML_Button_buttonIconDirection, 1);
         waitText = ta.getString(R.styleable.ML_Button_waitingText);
+        enableLoading = true;
         setBackground(normalBack);
         setGravity(Gravity.CENTER);
         setOrientation(HORIZONTAL);
@@ -185,6 +186,8 @@ public class ML_Button extends LinearLayout {
         if (gif == 0)
             return;
 
+        enableLoading = ta.getBoolean(R.styleable.ML_Button_ml_enableLoading, true);
+
         gifImageView = new GifImageView(context);
         int width = (int) (ta.getDimension(R.styleable.ML_Button_iconWidth, 0));
         int height = (int) (ta.getDimension(R.styleable.ML_Button_iconHeight, 0));
@@ -219,6 +222,8 @@ public class ML_Button extends LinearLayout {
             textView.setTextColor(textWaitingColor);
         }
 
+        if (!enableLoading)
+            return;
 
         if (waitText != null) {
             if (textView != null) {
