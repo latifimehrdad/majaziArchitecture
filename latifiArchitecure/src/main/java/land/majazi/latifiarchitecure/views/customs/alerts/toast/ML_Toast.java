@@ -24,13 +24,17 @@ public class ML_Toast extends LinearLayout {
 
     private TextView textView;
 
-    private ImageView imageView;
+    private ImageView imageViewIcon;
+
+    private ImageView imageViewClose;
 
     private Drawable toastBack;
 
     private static Runnable runnable;
 
     private static Handler handler;
+
+    private static LinearLayout linearLayoutPrimary;
 
 
     private int textColor;
@@ -73,10 +77,35 @@ public class ML_Toast extends LinearLayout {
         setBackground(toastBack);
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
+        configCloseLayout();
         configText();
         configIcon();
     }
     //______________________________________________________________________________________________ ML_Toast
+
+
+
+    //______________________________________________________________________________________________ configCloseLayout
+    private void configCloseLayout() {
+        LinearLayout close = new LinearLayout(context);
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        close.setOrientation(HORIZONTAL);
+        close.setGravity(Gravity.BOTTOM);
+        close.setPadding(10, 10, 10, 10);
+
+        imageViewClose = new ImageView(context);
+        LayoutParams params1 = new LayoutParams(imageWidth, imageHeight);
+        imageViewClose.setLayoutParams(params1);
+        imageViewClose.setVisibility(VISIBLE);
+        imageViewClose.setOnClickListener(v -> hide(linearLayoutPrimary));
+
+        close.addView(imageViewClose, params1);
+
+        addView(close, params);
+    }
+    //______________________________________________________________________________________________ configCloseLayout
+
+
 
 
     //______________________________________________________________________________________________ configEditText
@@ -100,20 +129,22 @@ public class ML_Toast extends LinearLayout {
 
     //______________________________________________________________________________________________ configIcon
     private void configIcon() {
-        imageView = new ImageView(context);
+        imageViewIcon = new ImageView(context);
         LayoutParams params = new LayoutParams(imageWidth, imageHeight);
-        imageView.setLayoutParams(params);
-        imageView.setVisibility(VISIBLE);
-        addView(imageView, params);
+        imageViewIcon.setLayoutParams(params);
+        imageViewIcon.setVisibility(VISIBLE);
+        addView(imageViewIcon, params);
     }
     //______________________________________________________________________________________________ configIcon
+
+
 
 
     //______________________________________________________________________________________________ mackToast
     public void mackToast(String message, Drawable icon, int iconTintColor) {
         textView.setText(message);
-        imageView.setImageDrawable(icon);
-        imageView.setColorFilter(iconTintColor);
+        imageViewIcon.setImageDrawable(icon);
+        imageViewIcon.setColorFilter(iconTintColor);
     }
     //______________________________________________________________________________________________ mackToast
 
@@ -121,6 +152,7 @@ public class ML_Toast extends LinearLayout {
     //______________________________________________________________________________________________ showToast
     public static void showToast(Context context, LinearLayout linearLayout, String message, Drawable icon, int iconTintColor) {
 
+        linearLayoutPrimary = linearLayout;
         hide(linearLayout);
 
         linearLayout.setVisibility(GONE);
