@@ -87,12 +87,6 @@ public class ML_Toast extends LinearLayout {
 
     //______________________________________________________________________________________________ configCloseLayout
     private void configCloseLayout() {
-        LinearLayout close = new LinearLayout(context);
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-        close.setOrientation(HORIZONTAL);
-        close.setGravity(Gravity.BOTTOM);
-        close.setPadding(10, 10, 10, 10);
-
         imageViewClose = new ImageView(context);
         LayoutParams params1 = new LayoutParams(imageWidth, imageHeight);
         imageViewClose.setLayoutParams(params1);
@@ -101,10 +95,8 @@ public class ML_Toast extends LinearLayout {
         imageViewClose.setImageResource(R.drawable.ic_close);
         imageViewClose.setColorFilter(getResources().getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
 
+        addView(imageViewClose, params1);
 
-        close.addView(imageViewClose, params1);
-
-        addView(close, params);
     }
     //______________________________________________________________________________________________ configCloseLayout
 

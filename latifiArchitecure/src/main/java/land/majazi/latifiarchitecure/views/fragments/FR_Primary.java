@@ -71,6 +71,7 @@ public class FR_Primary extends Fragment {
     public static int firstFragmentAction = 0;
     public final int RESULT_ENABLE = 11;
     public int biometricAction;
+    private static String fragmentName;
 
 
     //______________________________________________________________________________________________ fragmentActions
@@ -175,6 +176,7 @@ public class FR_Primary extends Fragment {
         ButterKnife.bind(this, getView());
         this.fragmentActions.init();
         this.fragmentActions.clickPressed();
+        fragmentName = fragmentActions.getClass().toString();
     }
     //______________________________________________________________________________________________ setView
 
@@ -587,5 +589,12 @@ public class FR_Primary extends Fragment {
     }
     //______________________________________________________________________________________________ blurryTextView
 
+
+
+    //______________________________________________________________________________________________ getFragmentName
+    public static String getFragmentName() {
+        return fragmentName;
+    }
+    //______________________________________________________________________________________________ getFragmentName
 
 }
