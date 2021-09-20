@@ -65,7 +65,7 @@
         <attr name="maxLine" format="integer"/>
         <attr name="maxLength" format="integer"/>
         <attr name="errorText" format="string"/>
-        <attr name="fontFamily"  format="reference"/>
+        <attr name="fontFamily" />
         <attr name="splitter" format="boolean"/>
         <attr name="inputType">
             <flag name="none" value="0x00000000" />
