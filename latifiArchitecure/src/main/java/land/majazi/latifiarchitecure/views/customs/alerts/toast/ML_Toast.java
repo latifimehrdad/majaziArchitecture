@@ -88,7 +88,7 @@ public class ML_Toast extends LinearLayout {
     //______________________________________________________________________________________________ configCloseLayout
     private void configCloseLayout() {
         imageViewClose = new ImageView(context);
-        LayoutParams params1 = new LayoutParams(imageWidth, imageHeight);
+        LayoutParams params1 = new LayoutParams(imageWidth / 2, imageHeight / 2);
         imageViewClose.setLayoutParams(params1);
         imageViewClose.setVisibility(VISIBLE);
         imageViewClose.setOnClickListener(v -> hide(linearLayoutPrimary));
