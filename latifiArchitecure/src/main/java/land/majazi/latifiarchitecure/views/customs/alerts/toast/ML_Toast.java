@@ -98,6 +98,9 @@ public class ML_Toast extends LinearLayout {
         imageViewClose.setLayoutParams(params1);
         imageViewClose.setVisibility(VISIBLE);
         imageViewClose.setOnClickListener(v -> hide(linearLayoutPrimary));
+        imageViewClose.setImageResource(R.drawable.ic_close);
+        imageViewClose.setColorFilter(getResources().getColor(R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+
 
         close.addView(imageViewClose, params1);
 
