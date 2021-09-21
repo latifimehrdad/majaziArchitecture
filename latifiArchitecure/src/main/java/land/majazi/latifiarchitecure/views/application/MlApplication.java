@@ -77,7 +77,6 @@ public class MlApplication extends MultiDexApplication {
                         return null;
                     }
                 })
-                .threadPoolSize(3)
                 .diskCacheSize(100 * 1024 * 1024)
                 .diskCache(new LimitedAgeDiskCache(getCacheDir(), 1200))
                 .imageDownloader(new AuthDownloader(getApplicationContext()))
@@ -119,7 +118,6 @@ public class MlApplication extends MultiDexApplication {
                         return null;
                     }
                 })
-                .threadPoolSize(3)
                 .diskCacheSize(100 * 1024 * 1024)
                 .diskCache(new LimitedAgeDiskCache(getCacheDir(), 1200))
                 .build();
