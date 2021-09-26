@@ -59,7 +59,6 @@ public class ML_Editable extends LinearLayout {
     private String errorText = "";
 
     private int decimalCont = 0;
-    int selector = 0;
 
     private textChangeInterface changeInterface;
 
@@ -295,7 +294,7 @@ public class ML_Editable extends LinearLayout {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                selector = edit.getSelectionStart();
+
             }
 
             @Override
@@ -341,10 +340,7 @@ public class ML_Editable extends LinearLayout {
                     value = utility.splitNumberOfString(value);
                     value = utility.persianToEnglish(value);
                     edit.setText(value);
-                    if (selector == edit.getText().length())
-                        edit.setSelection(edit.getText().length());
-                    else
-                        edit.setSelection(selector);
+                    edit.setSelection(edit.getText().length());
                 }
                 edit.addTextChangedListener(this);
                 text = editText.getText().toString();
