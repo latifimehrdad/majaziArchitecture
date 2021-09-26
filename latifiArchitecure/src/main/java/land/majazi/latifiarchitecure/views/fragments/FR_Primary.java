@@ -45,6 +45,7 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.models.MD_GregorianDate;
 import land.majazi.latifiarchitecure.models.MD_SolarDate;
+import land.majazi.latifiarchitecure.models.MD_ViewLoading;
 import land.majazi.latifiarchitecure.models.PrimaryModel;
 import land.majazi.latifiarchitecure.utility.Utility;
 import land.majazi.latifiarchitecure.views.adapter.AP_Loading;
@@ -72,6 +73,7 @@ public class FR_Primary extends Fragment {
     public final int RESULT_ENABLE = 11;
     public int biometricAction;
     private static String fragmentName;
+//    private List<MD_ViewLoading> md_viewLoadings;
 
 
     //______________________________________________________________________________________________ fragmentActions
@@ -402,6 +404,52 @@ public class FR_Primary extends Fragment {
         }
     }
     //______________________________________________________________________________________________ stopLoadingView
+
+
+
+/*
+    //______________________________________________________________________________________________ setViewLoadings
+    public void setViewLoadings(View view, int layout) {
+
+        if (md_viewLoadings == null)
+            md_viewLoadings = new ArrayList<>();
+
+        ViewSkeletonScreen loading = Skeleton.bind(view)
+                .shimmer(true)
+                .color(R.color.dayRecyclerLoading)
+                .angle(0)
+                .load(layout)
+                .duration(2200)
+                .show();
+
+        md_viewLoadings.add(new MD_ViewLoading(loading, view));
+
+    }
+    //______________________________________________________________________________________________ setViewLoadings
+*/
+
+
+
+
+/*
+    //______________________________________________________________________________________________ stopLoadingView
+    public void stopLoadingViews(View view) {
+
+        if (md_viewLoadings == null)
+            return;
+
+        for (MD_ViewLoading md_viewLoading : md_viewLoadings)
+            if (md_viewLoading.getView() == view)
+                if (md_viewLoading.getViewSkeletonScreen() != null) {
+                    md_viewLoading.getViewSkeletonScreen().hide();
+                    md_viewLoading.setViewSkeletonScreen(null);
+                }
+    }
+    //______________________________________________________________________________________________ stopLoadingView
+*/
+
+
+
 
 
     //______________________________________________________________________________________________ exitByDoubleclick
