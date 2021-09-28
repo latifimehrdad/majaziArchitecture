@@ -202,7 +202,7 @@ public class FileController {
 
 
     //______________________________________________________________________________________________ getPathImage
-    public String getPathImage(Context context, Uri uri) {
+    public String getPathImage(Context context, Uri uri, String appName) {
 /*        String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
@@ -216,6 +216,10 @@ public class FileController {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        if (s == null || s.isEmpty())
+            s = getPathVideo(context, uri, appName);
+
         return s;
     }
     //______________________________________________________________________________________________ getPathImage
