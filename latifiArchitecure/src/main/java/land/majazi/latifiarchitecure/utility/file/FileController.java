@@ -16,6 +16,7 @@ import androidx.core.content.FileProvider;
 import com.isseiaoki.simplecropview.util.Logger;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -202,13 +203,19 @@ public class FileController {
 
     //______________________________________________________________________________________________ getPathImage
     public String getPathImage(Context context, Uri uri) {
-        String[] projection = {MediaStore.Images.Media.DATA};
+/*        String[] projection = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         String s = cursor.getString(column_index);
-        cursor.close();
+        cursor.close();*/
+        String s = "";
+        try {
+            s = PathUtil.getPath(context, uri);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         return s;
     }
     //______________________________________________________________________________________________ getPathImage
