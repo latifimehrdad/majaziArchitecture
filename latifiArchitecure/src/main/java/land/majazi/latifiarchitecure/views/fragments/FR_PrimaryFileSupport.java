@@ -32,10 +32,12 @@ public class FR_PrimaryFileSupport extends FR_Primary {
     private Dialog cropImageDialog;
     private Uri uriFromCamera;
     private static String applicationName;
+    private boolean crop;
 
 
     //______________________________________________________________________________________________ showDialogChooseImage
-    public void showDialogChooseImage(String title, String appName) {
+    public void showDialogChooseImage(String title, String appName, boolean crop) {
+        this.crop = crop;
         applicationName = appName;
         if (chooseImageDialog != null) {
             chooseImageDialog.dismiss();
@@ -73,7 +75,6 @@ public class FR_PrimaryFileSupport extends FR_Primary {
 
     //______________________________________________________________________________________________ chooseImageFromGallery
     public void takePhoto() {
-
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         FileController fileController = new FileController();
         uriFromCamera = fileController.getOutputMediaFileUri(getActivity(), applicationName, MEDIA_TYPE_IMAGE);
@@ -136,7 +137,10 @@ public class FR_PrimaryFileSupport extends FR_Primary {
             if (requestCode == REQUEST_CHOOSE_PICTURE) {
                 if (uriFromCamera == null)
                     uriFromCamera = data.getData();
-                showDialogCropImage(uriFromCamera);
+                if (crop)
+                    showDialogCropImage(uriFromCamera);
+                else
+                    getFragmentActions().cropImage(uriFromCamera);
             } else if (requestCode == REQUEST_TAKE_VIDEO) {
                 if (getFragmentActions() != null)
                     getFragmentActions().cropImage(uriFromCamera);
