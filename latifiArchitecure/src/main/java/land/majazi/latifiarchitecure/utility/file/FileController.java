@@ -217,8 +217,16 @@ public class FileController {
             e.printStackTrace();
         }
 
-        if (s == null || s.isEmpty())
-            s = getPathVideo(context, uri, appName);
+        if (s == null || s.isEmpty()) {
+            ContentResolver contentResolver = context.getContentResolver();
+            Cursor cursor = contentResolver.query(uri, null, null, null, null);
+            if (cursor == null) return null;
+            cursor.moveToFirst();
+            String data = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DISPLAY_NAME));
+            String path = getAppMediaFolder(MEDIA_TYPE_IMAGE, appName);
+            s = path + "/" + data;
+            cursor.close();
+        }
 
         return s;
     }
