@@ -532,6 +532,9 @@ public class ML_Editable extends LinearLayout {
             case 16://CardNumber
                 result = utility.getValidations().cardNumber(getEditText().getText().toString());
                 break;
+            case 17://persian name
+                result = utility.getValidations().persianNameValidation(getEditText().getText().toString());
+                break;
         }
 
         if (!result)

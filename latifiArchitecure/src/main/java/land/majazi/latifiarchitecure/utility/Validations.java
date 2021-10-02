@@ -391,4 +391,25 @@ public class Validations {
     }
     //______________________________________________________________________________________________ CurdNumber
 
+
+    //______________________________________________________________________________________________ persianNameValidation
+    public boolean persianNameValidation(String text) {
+
+        if (text == null)
+            return false;
+
+        if (text.isEmpty())
+            return false;
+
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[آ-ی]).{1,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(text);
+
+        return matcher.matches();
+    }
+    //______________________________________________________________________________________________ persianNameValidation
+
+
 }

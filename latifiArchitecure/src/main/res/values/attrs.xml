@@ -117,6 +117,7 @@
             <enum name="numberDecimal" value="14"/>
             <enum name="postalCode" value="15"/>
             <enum name="cardNumber" value="16"/>
+            <enum name="persianName" value="17"/>
         </attr>
 
         <attr name="gravity">
