@@ -9,7 +9,7 @@ android {
         minSdk 24
         targetSdk 30
         versionCode 1
-        versionName "1.27"
+        versionName "1.28"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -35,9 +35,6 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation "androidx.exifinterface:exifinterface:1.3.3"
     api 'com.android.support:multidex:1.0.3'
@@ -60,7 +57,7 @@ dependencies {
 
     api 'com.intuit.sdp:sdp-android:1.0.5'
 
-    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'
+    api 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
 
     api 'com.isseiaoki:simplecropview:1.1.8'
 
