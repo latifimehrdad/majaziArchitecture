@@ -303,7 +303,7 @@ public class Validations {
 
         long priceLong = Long.valueOf(price);
 
-        if (priceLong < 1000 || priceLong > 50000000)
+        if (priceLong < 1000 || priceLong > 49900000)
             return false;
 
         return true;
