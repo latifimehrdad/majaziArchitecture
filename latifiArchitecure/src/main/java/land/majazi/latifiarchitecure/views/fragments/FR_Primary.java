@@ -39,13 +39,11 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import io.reactivex.subjects.PublishSubject;
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.models.MD_GregorianDate;
 import land.majazi.latifiarchitecure.models.MD_SolarDate;
-import land.majazi.latifiarchitecure.models.MD_ViewLoading;
 import land.majazi.latifiarchitecure.models.PrimaryModel;
 import land.majazi.latifiarchitecure.utility.Utility;
 import land.majazi.latifiarchitecure.views.adapter.AP_Loading;
