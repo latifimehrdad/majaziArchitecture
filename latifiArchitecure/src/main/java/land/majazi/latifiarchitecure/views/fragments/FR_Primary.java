@@ -77,27 +77,27 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ fragmentActions
     public interface fragmentActions {
 
-        void actionWhenFailureRequest(String error);
+        default void actionWhenFailureRequest(String error) { }
 
-        void backButtonPressed();
+        default void backButtonPressed() {}
 
-        void permissionWasGranted();
+        default void permissionWasGranted(){}
 
-        void clickPressed();
+        default void clickPressed(){}
 
-        void init();
+        default void init(){}
 
-        void cropImage(Uri uri);
+        default void cropImage(Uri uri){}
 
-        void unAuthorization(String error);
+        default void unAuthorization(String error){}
 
-        void startView();
+        default void startView(){}
 
-        void stopView();
+        default void stopView(){}
 
-        void bioMetric(int biometricAction);
+        default void bioMetric(int biometricAction){}
 
-        void bioMetricFailed(int biometricAction);
+        default void bioMetricFailed(int biometricAction){}
 
     }
     //______________________________________________________________________________________________ fragmentActions
