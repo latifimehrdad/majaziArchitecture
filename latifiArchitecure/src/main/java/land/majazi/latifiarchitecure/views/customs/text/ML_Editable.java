@@ -61,17 +61,10 @@ public class ML_Editable extends LinearLayout {
     private int decimalCont = 0;
 
     private textChangeInterface changeInterface;
-    private KeyboardListener keyboardListener;
 
 
     public interface textChangeInterface {
         void getTextWhenChanged(ML_Editable ml_editable, String text);
-    }
-
-
-    public interface KeyboardListener {
-        void showKeyboard();
-        void hideKeyboard();
     }
 
 
@@ -693,32 +686,5 @@ public class ML_Editable extends LinearLayout {
     }
     //______________________________________________________________________________________________ setDecimalCont
 
-
-
-    //______________________________________________________________________________________________ showAndHideKeyBoardListener
-    public void showAndHideKeyBoardListener(KeyboardListener keyboardListener) {
-        this.keyboardListener = keyboardListener;
-    }
-    //______________________________________________________________________________________________ showAndHideKeyBoardListener
-
-
-    //______________________________________________________________________________________________ onMeasure
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int proposedheight = MeasureSpec.getSize(heightMeasureSpec);
-        final int actualHeight = getHeight();
-        if (keyboardListener != null) {
-            if (actualHeight > proposedheight){
-                keyboardListener.showKeyboard();
-                // Keyboard is shown
-            } else {
-                keyboardListener.hideKeyboard();
-                // Keyboard is hidden
-            }
-        }
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-    //______________________________________________________________________________________________ onMeasure
 
 }
