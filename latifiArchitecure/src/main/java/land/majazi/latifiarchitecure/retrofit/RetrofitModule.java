@@ -1,20 +1,15 @@
-package land.majazi.latifiarchitecure.dagger.retrofit;
+package land.majazi.latifiarchitecure.retrofit;
 
 import android.content.Context;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
-import dagger.Module;
-import dagger.Provides;
-import land.majazi.latifiarchitecure.dagger.DaggerScope;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module
 public class RetrofitModule {
 
     private Context context;
@@ -27,10 +22,10 @@ public class RetrofitModule {
         this.gson = gson;
     }
 
+    public retrofit2.Retrofit getRetrofit() {
 
-    @Provides
-    @DaggerScope
-    public retrofit2.Retrofit getRetrofit(OkHttpClient okHttpClient) {
+        OkHttpClient okHttpClient = getOkHttpClient(getCache(getFile()), getHttpLoggingInterceptor());
+
         return new retrofit2.Retrofit.Builder()
                 .baseUrl(Host)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -40,9 +35,9 @@ public class RetrofitModule {
     }
 
 
-    @Provides
-    @DaggerScope
+
     public OkHttpClient getOkHttpClient(Cache cache, HttpLoggingInterceptor interceptor) {
+
         return new OkHttpClient.Builder()
                 .cache(cache)
                 .addNetworkInterceptor(interceptor)
@@ -52,22 +47,17 @@ public class RetrofitModule {
                 .build();
     }
 
-    @Provides
-    @DaggerScope
     public HttpLoggingInterceptor getHttpLoggingInterceptor() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
     }
 
-    @Provides
-    @DaggerScope
+
     public Cache getCache(File file) {
         return new Cache(file, 5 * 1000 * 1000);
     }
 
-    @Provides
-    @DaggerScope
     public File getFile() {
         return new File(context.getCacheDir(), "Okhttp_cache");
     }
