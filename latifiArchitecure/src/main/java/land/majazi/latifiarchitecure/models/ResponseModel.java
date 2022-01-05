@@ -1,15 +1,15 @@
 package land.majazi.latifiarchitecure.models;
 
-public class PrimaryModel {
+public class ResponseModel {
     int responseCode;
     boolean error;
     String message;
     Object responseBody;
 
-    public PrimaryModel() {
+    public ResponseModel() {
     }
 
-    public PrimaryModel(int responseCode, boolean error, String message, Object responseBody) {
+    public ResponseModel(int responseCode, boolean error, String message, Object responseBody) {
         this.responseCode = responseCode;
         this.error = error;
         this.message = message;

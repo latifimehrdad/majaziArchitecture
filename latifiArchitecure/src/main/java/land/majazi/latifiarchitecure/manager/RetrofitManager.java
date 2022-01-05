@@ -1,4 +1,4 @@
-package land.majazi.latifiarchitecure.retrofit;
+package land.majazi.latifiarchitecure.manager;
 
 import android.content.Context;
 import com.google.gson.Gson;
@@ -10,13 +10,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitModule {
+public class RetrofitManager {
 
     private Context context;
     private String Host;
     private Gson gson;
 
-    public RetrofitModule(Context context, String Host, Gson gson) {
+    public RetrofitManager(Context context, String Host, Gson gson) {
         this.context = context;
         this.Host = Host;
         this.gson = gson;

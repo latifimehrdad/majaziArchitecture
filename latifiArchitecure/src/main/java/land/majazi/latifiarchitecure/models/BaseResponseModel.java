@@ -5,7 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class RP_Primary {
+import land.majazi.latifiarchitecure.enums.EnumStatusCode;
+
+public class BaseResponseModel {
 
 
     @SerializedName(value = "name1", alternate = {"isSuccess", "IsSuccess"})
@@ -14,7 +16,7 @@ public class RP_Primary {
 
     @SerializedName(value = "name2", alternate = {"statusCode", "StatusCode"})
     @Expose
-    private enumStatusCode statusCode;
+    private EnumStatusCode statusCode;
 
     @SerializedName(value = "name3", alternate = {"message", "Message"})
     @Expose
@@ -33,11 +35,11 @@ public class RP_Primary {
         isSuccess = success;
     }
 
-    public enumStatusCode getStatusCode() {
+    public EnumStatusCode getStatusCode() {
         return statusCode;
     }
 
-    public void setStatusCode(enumStatusCode statusCode) {
+    public void setStatusCode(EnumStatusCode statusCode) {
         this.statusCode = statusCode;
     }
 

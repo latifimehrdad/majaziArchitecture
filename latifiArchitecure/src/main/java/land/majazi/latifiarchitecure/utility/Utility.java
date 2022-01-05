@@ -18,8 +18,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
-import land.majazi.latifiarchitecure.models.MD_GregorianDate;
-import land.majazi.latifiarchitecure.models.MD_SolarDate;
+import land.majazi.latifiarchitecure.models.GregorianDateModel;
+import land.majazi.latifiarchitecure.models.SolarDateModel;
 
 public class Utility {
 
@@ -33,60 +33,10 @@ public class Utility {
     }
     //______________________________________________________________________________________________ ApplicationUtility
 
-
-    //______________________________________________________________________________________________ persianToEnglish
-    public String persianToEnglish(String persianStr) {
-
-        if (persianStr == null || persianStr.isEmpty())
-            return "";
-
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < persianStr.length(); i++) {
-            char c = persianStr.charAt(i);
-            switch (c) {
-                case '۰':
-                    result.append("0");
-                    break;
-                case '۱':
-                    result.append("1");
-                    break;
-                case '۲':
-                    result.append("2");
-                    break;
-                case '۳':
-                    result.append("3");
-                    break;
-                case '۴':
-                    result.append("4");
-                    break;
-                case '۵':
-                    result.append("5");
-                    break;
-                case '۶':
-                    result.append("6");
-                    break;
-                case '۷':
-                    result.append("7");
-                    break;
-                case '۸':
-                    result.append("8");
-                    break;
-                case '۹':
-                    result.append("9");
-                    break;
-                default:
-                    result.append(c);
-                    break;
-            }
-        }
-        return result.toString();
-
-    }
-    //______________________________________________________________________________________________ persianToEnglish
-
+    
 
     //______________________________________________________________________________________________ gregorianToSolarDate
-    public MD_SolarDate gregorianToSolarDate(Date GregorianDate) {
+    public SolarDateModel gregorianToSolarDate(Date GregorianDate) {
 
 /*        Type = "FullJalaliNumber = 1367/05/31"
           Type = "YearJalaliNumber = 1367"
@@ -253,7 +203,7 @@ public class Utility {
         strWeekDay = getDayTitle(WeekDay);
 
         Locale loc = new Locale("en_US");
-        MD_SolarDate gregorianToSun = new MD_SolarDate();
+        SolarDateModel gregorianToSun = new SolarDateModel();
         gregorianToSun.setStringYear(String.valueOf(year));
         gregorianToSun.setIntYear(year);
         gregorianToSun.setIntMonth(month);
@@ -269,7 +219,7 @@ public class Utility {
 
 
     //______________________________________________________________________________________________ solarDate_to_gregorian
-    public MD_GregorianDate solarDateToGregorian(String solarDate) {
+    public GregorianDateModel solarDateToGregorian(String solarDate) {
 
         if (solarDate == null)
             return null;
@@ -302,7 +252,7 @@ public class Utility {
         int[] sal_a = {0, 31, ((out[0] % 4 == 0 && out[0] % 100 != 0) || (out[0] % 400 == 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         for (out[2]++; out[1] < 13 && out[2] > sal_a[out[1]]; out[1]++) out[2] -= sal_a[out[1]];
 
-        return new MD_GregorianDate(out[0], out[1], out[2]);
+        return new GregorianDateModel(out[0], out[1], out[2]);
     }
     //______________________________________________________________________________________________ solarDate_to_gregorian
 
@@ -676,140 +626,6 @@ public class Utility {
         return validations;
     }
     //______________________________________________________________________________________________ getValidations
-
-
-    //______________________________________________________________________________________________ hideKeyboard
-    public void hideKeyboard(Activity activity) {
-        if (activity != null) {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            View view = activity.getCurrentFocus();
-            if (view == null) {
-                view = new View(activity);
-            }
-            if (imm != null)
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-    //______________________________________________________________________________________________ hideKeyboard
-
-
-    //______________________________________________________________________________________________ isInternetConnected
-    @SuppressLint("MissingPermission")
-    public boolean isInternetConnected(Context context) {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork == null)
-            return false;
-
-        return activeNetwork.isConnectedOrConnecting();
-    }
-    //______________________________________________________________________________________________ isInternetConnected
-
-
-    //______________________________________________________________________________________________ isLocationEnabled
-    public boolean isLocationEnabled(Context context) {
-        int locationMode;
-        String locationProviders;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            try {
-                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
-
-            } catch (Settings.SettingNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            }
-
-            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
-
-        } else {
-            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-            return !TextUtils.isEmpty(locationProviders);
-        }
-    }
-    //______________________________________________________________________________________________ isLocationEnabled
-
-
-    //______________________________________________________________________________________________ turnOnLocation
-    public void turnOnLocation(Activity activity) {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        activity.startActivity(intent);
-    }
-    //______________________________________________________________________________________________ turnOnLocation
-
-
-    //______________________________________________________________________________________________ getString
-    public String getString(String value) {
-        if (value == null)
-            return "";
-        else
-            return value;
-    }
-    //______________________________________________________________________________________________ getString
-
-
-
-    //______________________________________________________________________________________________ getDeviceName
-    public String getDeviceName() {
-        try {
-            String manufacturer = Build.MANUFACTURER;
-            String model = Build.MODEL;
-            model.replaceAll("-", "_");
-            if (model.startsWith(manufacturer)) {
-                return capitalize(model);
-            } else {
-                return capitalize(manufacturer) + " " + model;
-            }
-        } catch (Exception e) {
-            return "DeviceName : I could not access the Device Name";
-        }
-    }
-    //______________________________________________________________________________________________ getDeviceName
-
-
-
-    //______________________________________________________________________________________________ capitalize
-    private String capitalize(String s) {
-        if (s == null || s.length() == 0) {
-            return "";
-        }
-        char first = s.charAt(0);
-        if (Character.isUpperCase(first)) {
-            return s;
-        } else {
-            return Character.toUpperCase(first) + s.substring(1);
-        }
-    }
-    //______________________________________________________________________________________________ capitalize
-
-
-
-    //______________________________________________________________________________________________ getAndroidVersion
-    public String getAndroidVersion() {
-        try {
-            String release = Build.VERSION.RELEASE;
-            int sdkVersion = Build.VERSION.SDK_INT;
-            return "Android Version : " + release + " (SDK : " + release + ")";
-        } catch (Exception e) {
-            return "Android Version : I could not access the Android Version";
-        }
-    }
-    //______________________________________________________________________________________________ getAndroidVersion
-
-
-
-    //______________________________________________________________________________________________ getDeviceLanguage
-    public String getDeviceLanguage() {
-        try {
-            String languesge = Locale.getDefault().getDisplayLanguage();
-            return "Device Language : " + languesge;
-        } catch (Exception e) {
-            return "Device Language : I could not access the Device Language";
-        }
-    }
-    //______________________________________________________________________________________________ getDeviceLanguage
 
 
 }
