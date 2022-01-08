@@ -1,8 +1,7 @@
-package land.majazi.latifiarchitecure.views.application;
+package land.majazi.latifiarchitecure.manager;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-
-import androidx.multidex.MultiDexApplication;
 
 import com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiskCache;
 import com.nostra13.universalimageloader.cache.memory.BaseMemoryCache;
@@ -11,30 +10,34 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
+import java.io.IOException;
 import java.lang.ref.Reference;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-import land.majazi.latifiarchitecure.utility.AuthDownloader;
+import land.majazi.latifiarchitecure.enums.EnumImageLoader;
 
-public class MlApplication extends MultiDexApplication {
+public class ImageLoaderManager {
 
-    private static enumImageLoader imageLoaderType;
+
+    private static EnumImageLoader imageLoaderType;
 
     //______________________________________________________________________________________________ configurationImageLoader
-    public void configurationImageLoader(enumImageLoader type, String token) {
+    public void configurationImageLoader(Context context, EnumImageLoader type, String token) {
 
         if (imageLoaderType == null)
-            configurationImageLoaderToken(token);
+            configurationImageLoaderToken(context, token);
         else {
             if (imageLoaderType != type)
                 switch (type) {
                     case token:
-                        configurationImageLoaderToken(token);
+                        configurationImageLoaderToken(context, token);
                         break;
                     case normal:
-                        configurationImageLoaderNormal();
+                        configurationImageLoaderNormal(context);
                         break;
                 }
         }
@@ -42,11 +45,10 @@ public class MlApplication extends MultiDexApplication {
     //______________________________________________________________________________________________ configurationImageLoader
 
 
-
     //______________________________________________________________________________________________ configurationImageLoaderToken
-    public void configurationImageLoaderToken(String token) {
+    public void configurationImageLoaderToken(Context context, String token) {
 
-        imageLoaderType = enumImageLoader.token;
+        imageLoaderType = EnumImageLoader.token;
 
         Map<String, String> headers = new HashMap();
         headers.put("Authorization", token);
@@ -68,7 +70,7 @@ public class MlApplication extends MultiDexApplication {
                 .build();
 
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .defaultDisplayImageOptions(defaultOptions)
                 .memoryCache(new BaseMemoryCache() {
                     @Override
@@ -78,8 +80,8 @@ public class MlApplication extends MultiDexApplication {
                 })
                 .threadPoolSize(4)
                 .diskCacheSize(100 * 1024 * 1024)
-                .diskCache(new LimitedAgeDiskCache(getCacheDir(), 1200))
-                .imageDownloader(new AuthDownloader(getApplicationContext()))
+                .diskCache(new LimitedAgeDiskCache(context.getCacheDir(), 1200))
+                .imageDownloader(new AuthDownloader(context))
                 .build();
 
         ImageLoader.getInstance().init(config);
@@ -89,10 +91,10 @@ public class MlApplication extends MultiDexApplication {
 
 
     //______________________________________________________________________________________________ configurationImageLoaderNormal
-    public void configurationImageLoaderNormal() {
+    public void configurationImageLoaderNormal(Context context) {
 
 
-        imageLoaderType = enumImageLoader.normal;
+        imageLoaderType = EnumImageLoader.normal;
 
         try {
             ImageLoader.getInstance().destroy();
@@ -110,7 +112,7 @@ public class MlApplication extends MultiDexApplication {
                 .build();
 
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .defaultDisplayImageOptions(defaultOptions)
                 .memoryCache(new BaseMemoryCache() {
                     @Override
@@ -120,7 +122,7 @@ public class MlApplication extends MultiDexApplication {
                 })
                 .threadPoolSize(4)
                 .diskCacheSize(100 * 1024 * 1024)
-                .diskCache(new LimitedAgeDiskCache(getCacheDir(), 1200))
+                .diskCache(new LimitedAgeDiskCache(context.getCacheDir(), 1200))
                 .build();
 
         ImageLoader.getInstance().init(config);
@@ -135,5 +137,25 @@ public class MlApplication extends MultiDexApplication {
     //______________________________________________________________________________________________ getImageLoader
 
 
+    //______________________________________________________________________________________________ AuthDownloader
+    public class AuthDownloader extends BaseImageDownloader {
+
+        public AuthDownloader(Context context){
+            super(context);
+        }
+
+        @Override
+        protected HttpURLConnection createConnection(String url, Object extra) throws IOException {
+            HttpURLConnection conn = super.createConnection(url, extra);
+            Map<String, String> headers = (Map<String, String>) extra;
+            if (headers != null) {
+                for (Map.Entry<String, String> header : headers.entrySet()) {
+                    conn.setRequestProperty(header.getKey(), header.getValue());
+                }
+            }
+            return conn;
+        }
+    }
+    //______________________________________________________________________________________________ AuthDownloader
 
 }

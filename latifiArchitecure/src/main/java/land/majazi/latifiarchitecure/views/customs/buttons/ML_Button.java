@@ -15,15 +15,14 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.BindingAdapter;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.utility.Utility;
-import land.majazi.latifiarchitecure.views.customs.text.ML_Editable;
+import land.majazi.latifiarchitecure.manager.SolarDateManager;
 import pl.droidsonroids.gif.GifImageView;
 
 public class ML_Button extends LinearLayout {
 
     private Context context;
     private TypedArray ta;
-    private Utility utility;
+    private SolarDateManager solarDateManager;
     private String text;
     private String waitText;
 
@@ -61,7 +60,7 @@ public class ML_Button extends LinearLayout {
 
     //______________________________________________________________________________________________ init
     private void init(AttributeSet attrs) {
-        utility = new Utility();
+        solarDateManager = new SolarDateManager();
         ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_Button);
         configLayout();
     }

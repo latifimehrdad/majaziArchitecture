@@ -1,4 +1,4 @@
-package land.majazi.latifiarchitecure.utility.compress.video;
+package land.majazi.latifiarchitecure.compress.video;
 
 import android.os.AsyncTask;
 

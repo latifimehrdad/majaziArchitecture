@@ -1,14 +1,15 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "land.majazi.majaziarchitecture"
-        minSdk 24
-        targetSdk 30
+        minSdk 26
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 

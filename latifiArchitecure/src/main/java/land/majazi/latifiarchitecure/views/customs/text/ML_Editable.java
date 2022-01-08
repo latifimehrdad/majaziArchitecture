@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,17 +22,16 @@ import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
 
-import java.text.DecimalFormat;
-
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.converter.Converter;
-import land.majazi.latifiarchitecure.utility.Utility;
+import land.majazi.latifiarchitecure.utility.Splitter;
+import land.majazi.latifiarchitecure.utility.Validator;
 
 public class ML_Editable extends LinearLayout {
 
     private Context context;
     private TypedArray ta;
-    private Utility utility;
+//    private SolarDateManager solarDateManager;
     private Object additionalValue;
     private String text;
     private int validationType;
@@ -88,7 +86,6 @@ public class ML_Editable extends LinearLayout {
 
     //______________________________________________________________________________________________ init
     private void init(AttributeSet attrs) {
-        utility = new Utility();
         ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_Editable);
         configLayout();
     }
@@ -338,7 +335,7 @@ public class ML_Editable extends LinearLayout {
 
                 if (splitter) {
                     String value = edit.getText().toString();
-                    value = utility.splitNumberOfString(value);
+                    value = new Splitter().split(value);
                     Converter converter = new Converter();
                     value = converter.PersianNumberToEnglishNumber(value);
                     edit.setText(value);
@@ -476,36 +473,34 @@ public class ML_Editable extends LinearLayout {
     //______________________________________________________________________________________________ checkValidation
     public boolean checkValidation() {
         boolean result = true;
+        Validator validator = new Validator();
         switch (validationType) {
             case 0://none
                 result = true;
                 break;
 
             case 1://mobile
-                result = utility.getValidations().mobileValidation(getEditText().getText().toString());
+                result = validator.isMobile(getEditText().getText().toString());
                 break;
 
             case 2://text
-                result = utility.getValidations().textValidation(getEditText().getText().toString());
+                result = validator.isText(getEditText().getText().toString());
                 break;
 
             case 3://email
-                result = utility.getValidations().emailValidation(getEditText().getText().toString());
+                result = validator.isEmail(getEditText().getText().toString());
                 break;
 
             case 4://national
-                result = utility.getValidations().nationalValidation(getEditText().getText().toString());
+                result = validator.isNationalCode(getEditText().getText().toString());
                 break;
 
             case 5://password
-                result = utility.getValidations().passwordValidation(getEditText().getText().toString());
+                result = validator.isStrongPassword(getEditText().getText().toString());
                 break;
 
-            case 6://mobile without area code
-                result = utility.getValidations().mobileValidationWithoutAreaCode(getEditText().getText().toString());
-                break;
             case 7://phone
-                result = utility.getValidations().phoneValidation(getEditText().getText().toString());
+                result = validator.isPhone(getEditText().getText().toString());
                 break;
 /*            case 8://decimal
                 result = utility.getValidations().decimalValidation(getEditText().getText().toString(), getDecimalCont());
@@ -517,25 +512,19 @@ public class ML_Editable extends LinearLayout {
                 result = walletValidation;
                 break;
             case 11://shaba
-                result = utility.getValidations().shabaValidation(getEditText().getText().toString());
+                result = validator.isShaba(getEditText().getText().toString());
                 break;
             case 12:// price
-                result = utility.getValidations().priceValidation(getEditText().getText().toString());
-                break;
-            case 13:// numberInteger
-                result = utility.getValidations().numberIsIntegerValidation(getEditText().getText().toString());
-                break;
-            case 14:// numberDecimal
-                result = utility.getValidations().numberValidation(getEditText().getText().toString());
+                result = validator.isPriceForGetWay(getEditText().getText().toString());
                 break;
             case 15:// postalCode
-                result = utility.getValidations().postalCode(getEditText().getText().toString());
+                result = validator.isPostalCode(getEditText().getText().toString());
                 break;
             case 16://CardNumber
-                result = utility.getValidations().cardNumber(getEditText().getText().toString());
+                result = validator.isCardNumber(getEditText().getText().toString());
                 break;
             case 17://persian name
-                result = utility.getValidations().persianNameValidation(getEditText().getText().toString());
+                result = validator.isPersianName(getEditText().getText().toString());
                 break;
         }
 

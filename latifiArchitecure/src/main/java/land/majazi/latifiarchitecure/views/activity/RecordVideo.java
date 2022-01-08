@@ -1,11 +1,7 @@
 package land.majazi.latifiarchitecure.views.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.opengl.GLSurfaceView;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,13 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
@@ -29,7 +21,6 @@ import com.daasuu.camerarecorder.LensFacing;
 import java.io.File;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.utility.file.FileController;
 
 public class RecordVideo extends AppCompatActivity {
 

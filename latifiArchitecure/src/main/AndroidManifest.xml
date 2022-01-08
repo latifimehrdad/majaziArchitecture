@@ -11,9 +11,6 @@
     <application>
 
 
-        <activity android:name=".views.activity.PlaybackActivity"
-            android:screenOrientation="portrait"/>
-
         <activity android:name=".views.activity.RecordVideo"
             android:screenOrientation="portrait"/>
 

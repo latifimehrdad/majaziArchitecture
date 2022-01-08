@@ -1,4 +1,4 @@
-package land.majazi.latifiarchitecure.utility.compress.video;
+package land.majazi.latifiarchitecure.compress.video;
 
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
@@ -6,10 +6,8 @@ import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaMuxer;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.util.Log;
-import android.view.Surface;
 
 import java.io.File;
 import java.io.IOException;

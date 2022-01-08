@@ -3,9 +3,7 @@ package land.majazi.latifiarchitecure.views.customs.text;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.ImageView;
@@ -14,18 +12,17 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingAdapter;
-import androidx.databinding.InverseBindingListener;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.utility.Utility;
+import land.majazi.latifiarchitecure.manager.SolarDateManager;
+import land.majazi.latifiarchitecure.utility.Splitter;
+import land.majazi.latifiarchitecure.utility.Validator;
 
 public class ML_TextView extends LinearLayout {
 
     private Context context;
     private TypedArray ta;
-    private Utility utility;
+    private SolarDateManager solarDateManager;
     private Object additionalValue;
     private String text;
     private boolean splitter;
@@ -60,7 +57,7 @@ public class ML_TextView extends LinearLayout {
 
     //______________________________________________________________________________________________ init
     private void init(AttributeSet attrs) {
-        utility = new Utility();
+        solarDateManager = new SolarDateManager();
         ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_TextView);
         configLayout();
     }
@@ -184,7 +181,7 @@ public class ML_TextView extends LinearLayout {
         this.text = text;
         if (splitter) {
             String value = text;
-            value = utility.splitNumberOfString(value);
+            value = new Splitter().split(value);
             textView.setText(value);
         } else {
             getTextView().setText(text);
@@ -261,57 +258,48 @@ public class ML_TextView extends LinearLayout {
     //______________________________________________________________________________________________ checkValidation
     public boolean checkValidation() {
         boolean result = true;
+        Validator validator = new Validator();
         switch (validationType) {
             case 0://none
                 result = true;
                 break;
 
             case 1://mobile
-                result = utility.getValidations().mobileValidation(getAdditionalValue().toString());
+                result = validator.isMobile(getAdditionalValue().toString());
                 break;
 
             case 2://text
-                result = utility.getValidations().textValidation(getAdditionalValue().toString());
+                result = validator.isText(getAdditionalValue().toString());
                 break;
 
             case 3://email
-                result = utility.getValidations().emailValidation(getAdditionalValue().toString());
+                result = validator.isEmail(getAdditionalValue().toString());
                 break;
 
             case 4://national
-                result = utility.getValidations().nationalValidation(getAdditionalValue().toString());
+                result = validator.isNationalCode(getAdditionalValue().toString());
                 break;
 
             case 5://password
-                result = utility.getValidations().passwordValidation(getAdditionalValue().toString());
-                break;
-
-            case 6://mobile without area code
-                result = utility.getValidations().mobileValidationWithoutAreaCode(getAdditionalValue().toString());
+                result = validator.isStrongPassword(getAdditionalValue().toString());
                 break;
             case 7://phone
-                result = utility.getValidations().phoneValidation(getAdditionalValue().toString());
+                result = validator.isPhone(getAdditionalValue().toString());
                 break;
-/*            case 8://decimal
-                result = utility.getValidations().decimalValidation(getEditText().getText().toString(), getDecimalCont());
-                break;
-            case 9://integer
-                result = utility.getValidations().integerCountValidation(getEditText().getText().toString());
-                break;*/
-/*            case 10://wallet
-                result = walletValidation;
-                break;*/
             case 11://shaba
-                result = utility.getValidations().shabaValidation(getAdditionalValue().toString());
+                result = validator.isShaba(getAdditionalValue().toString());
                 break;
             case 12:// price
-                result = utility.getValidations().priceValidation(getAdditionalValue().toString());
+                result = validator.isPriceForGetWay(getAdditionalValue().toString());
                 break;
-            case 13:// numberInteger
-                result = utility.getValidations().numberIsIntegerValidation(getAdditionalValue().toString());
+            case 15:// postalCode
+                result = validator.isPostalCode(getAdditionalValue().toString());
                 break;
-            case 14:// numberDecimal
-                result = utility.getValidations().numberValidation(getAdditionalValue().toString());
+            case 16://CardNumber
+                result = validator.isCardNumber(getAdditionalValue().toString());
+                break;
+            case 17://persian name
+                result = validator.isPersianName(getAdditionalValue().toString());
                 break;
         }
 

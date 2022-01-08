@@ -35,21 +35,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.converter.Converter;
 import land.majazi.latifiarchitecure.manager.KeyBoardManager;
-import land.majazi.latifiarchitecure.models.GregorianDateModel;
-import land.majazi.latifiarchitecure.models.SolarDateModel;
 import land.majazi.latifiarchitecure.models.ResponseModel;
-import land.majazi.latifiarchitecure.utility.Utility;
+import land.majazi.latifiarchitecure.manager.SolarDateManager;
 import land.majazi.latifiarchitecure.views.adapter.AP_Loading;
-import land.majazi.latifiarchitecure.views.customs.alerts.toast.ML_Toast;
+import land.majazi.latifiarchitecure.views.customs.alert.MLToast;
 import land.majazi.latifiarchitecure.views.customs.loadings.RecyclerViewSkeletonScreen;
 import land.majazi.latifiarchitecure.views.customs.loadings.Skeleton;
 import land.majazi.latifiarchitecure.views.customs.loadings.ViewSkeletonScreen;
@@ -201,16 +197,16 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ showToast
     public void showToast(LinearLayout linearLayout, String message, Drawable icon, int tintColor) {
 
-        if (message != null && !message.isEmpty())
-            ML_Toast.showToast(getContext(), linearLayout, message, icon, tintColor);
+/*        if (message != null && !message.isEmpty())
+            MLToast.showToast(getContext(), linearLayout, message, icon, tintColor);*/
     }
     //______________________________________________________________________________________________ showToast
 
 
     //______________________________________________________________________________________________ getUtility
-    public Utility getUtility() {
+    public SolarDateManager getUtility() {
 
-        return new Utility();
+        return new SolarDateManager();
     }
     //______________________________________________________________________________________________ getUtility
 
@@ -307,6 +303,7 @@ public class FR_Primary extends Fragment {
     public void hideKeyBoard() {
         KeyBoardManager keyBoardManager = new KeyBoardManager();
         keyBoardManager.hide(getActivity());
+
     }
     //______________________________________________________________________________________________ hideKeyBoard
 
@@ -548,16 +545,16 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ getPersianCalendar
     private PersianCalendar getPersianCalendar(String init) {
 
-        PersianCalendar initDate;
+        PersianCalendar initDate = null;
 
-        if (init == null) {
+/*        if (init == null) {
             SolarDateModel _solarDateModel = getUtility().gregorianToSolarDate(new Date());
             initDate = new PersianCalendar();
             initDate.setPersianDate(_solarDateModel.getIntYear(), _solarDateModel.getIntMonth(), _solarDateModel.getIntDay());
         } else {
             initDate = new PersianCalendar();
             initDate.setPersianDate(Integer.valueOf(init.substring(0, 4)).intValue(), Integer.valueOf(init.substring(5, 7)).intValue(), Integer.valueOf(init.substring(8, 10)).intValue());
-        }
+        }*/
         return initDate;
     }
     //______________________________________________________________________________________________ getPersianCalendar
@@ -566,7 +563,7 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ dateGenerate
     public String dateGenerate(String date, String time) {
 
-        if (date == null || time == null)
+/*        if (date == null || time == null)
             return "";
 
         if (date.isEmpty() || time.isEmpty())
@@ -578,7 +575,8 @@ public class FR_Primary extends Fragment {
         GregorianDateModel gregorianDate = getUtility().solarDateToGregorian(date);
         String result = gregorianDate.getDateString("-");
         result = result + "T" + time;
-        return result;
+        return result;*/
+        return "";
     }
     //______________________________________________________________________________________________ dateGenerate
 

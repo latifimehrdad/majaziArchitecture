@@ -1,4 +1,4 @@
-package land.majazi.latifiarchitecure.utility;
+package land.majazi.latifiarchitecure.manager.hash;
 
 
 import javax.crypto.Cipher;

@@ -16,7 +16,7 @@ import com.isseiaoki.simplecropview.callback.SaveCallback;
 import java.io.File;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.utility.file.FileController;
+import land.majazi.latifiarchitecure.manager.FileManager;
 import land.majazi.latifiarchitecure.views.activity.RecordVideo;
 import land.majazi.latifiarchitecure.views.customs.buttons.ML_Button;
 
@@ -76,9 +76,9 @@ public class FR_PrimaryFileSupport extends FR_Primary {
     //______________________________________________________________________________________________ chooseImageFromGallery
     public void takePhoto() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        FileController fileController = new FileController();
-        uriFromCamera = fileController.getOutputMediaFileUri(getActivity(), applicationName, MEDIA_TYPE_IMAGE);
-        fileController = null;
+        FileManager fileManager = new FileManager();
+        uriFromCamera = fileManager.getOutputMediaFileUri(getActivity(), applicationName, MEDIA_TYPE_IMAGE);
+        fileManager = null;
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriFromCamera);
         startActivityForResult(cameraIntent, REQUEST_CHOOSE_PICTURE);
         if (chooseImageDialog != null) {
@@ -92,10 +92,10 @@ public class FR_PrimaryFileSupport extends FR_Primary {
     //______________________________________________________________________________________________ takeVideo
     public void takeVideo(String message, String appName) {
         applicationName = appName;
-        FileController fileController = new FileController();
-        File fileFromCamera = fileController.getOutputMediaFile(MEDIA_TYPE_VIDEO, applicationName);
-        uriFromCamera = fileController.getUriFromFile(getContext(), fileFromCamera);
-        fileController = null;
+        FileManager fileManager = new FileManager();
+        File fileFromCamera = fileManager.getOutputMediaFile(MEDIA_TYPE_VIDEO, applicationName);
+        uriFromCamera = fileManager.getUriFromFile(getContext(), fileFromCamera);
+        fileManager = null;
         Intent intent = new Intent(getContext(), RecordVideo.class);
         intent.putExtra("INTENT_NAME_VIDEO_PATH", fileFromCamera.getPath());
         intent.putExtra("INTENT_NAME_VIDEO_TEXT", message);
@@ -184,9 +184,9 @@ public class FR_PrimaryFileSupport extends FR_Primary {
                     .execute(new CropCallback() {
                         @Override
                         public void onSuccess(Bitmap cropped) {
-                            FileController fileController = new FileController();
+                            FileManager fileManager = new FileManager();
                             mCropView.save(cropped)
-                                    .execute(fileController.createSaveUri(getContext(), applicationName), mSaveCallback);
+                                    .execute(fileManager.createSaveUri(getContext(), applicationName), mSaveCallback);
                         }
 
                         @Override
@@ -203,10 +203,10 @@ public class FR_PrimaryFileSupport extends FR_Primary {
 
     //______________________________________________________________________________________________ saveBitmap
     public void saveBitmap(Bitmap bitmap, String appName) {
-        FileController fileController = new FileController();
+        FileManager fileManager = new FileManager();
         CropImageView mCropView = new CropImageView(getContext());
         mCropView.save(bitmap)
-                .execute(fileController.createSaveUri(getContext(), appName), mSaveCallback);
+                .execute(fileManager.createSaveUri(getContext(), appName), mSaveCallback);
     }
     //______________________________________________________________________________________________ saveBitmap
 
