@@ -1,6 +1,6 @@
 package land.majazi.latifiarchitecure.models;
 
-public class SolarDateModel {
+public class MD_SolarDate {
 
     private int intYear;
     private int intMonth;
@@ -12,7 +12,7 @@ public class SolarDateModel {
     private String stringYear;
 
 
-    public SolarDateModel() {
+    public MD_SolarDate() {
 
     }
 

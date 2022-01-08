@@ -16,6 +16,7 @@ import java.lang.ref.Reference;
 import java.util.HashMap;
 import java.util.Map;
 
+import land.majazi.latifiarchitecure.models.enumImageLoader;
 import land.majazi.latifiarchitecure.utility.AuthDownloader;
 
 public class MlApplication extends MultiDexApplication {

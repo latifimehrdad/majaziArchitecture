@@ -9,9 +9,6 @@ import java.math.BigInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import land.majazi.latifiarchitecure.converter.Converter;
-import land.majazi.latifiarchitecure.converter.PersianNumberToEnglishNumber;
-
 
 public class Validations {
 
@@ -317,8 +314,8 @@ public class Validations {
     //______________________________________________________________________________________________ numberValidation
     public boolean numberValidation(String number) {
 
-        Converter converter = new Converter();
-        number = converter.PersianNumberToEnglishNumber(number);
+        Utility utility = new Utility();
+        number = utility.persianToEnglish(number);
 
         if (number == null || number.isEmpty())
             return false;
@@ -339,8 +336,8 @@ public class Validations {
         if (!numberValidation(number))
             return false;
 
-        Converter converter = new Converter();
-        number = converter.PersianNumberToEnglishNumber(number);
+        Utility utility = new Utility();
+        number = utility.persianToEnglish(number);
 
         double v = Double.valueOf(number);
         if (v != (long) v)

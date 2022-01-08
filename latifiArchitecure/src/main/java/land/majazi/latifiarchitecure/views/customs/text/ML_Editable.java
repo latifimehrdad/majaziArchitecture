@@ -26,7 +26,6 @@ import androidx.databinding.InverseBindingListener;
 import java.text.DecimalFormat;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.converter.Converter;
 import land.majazi.latifiarchitecure.utility.Utility;
 
 public class ML_Editable extends LinearLayout {
@@ -339,8 +338,7 @@ public class ML_Editable extends LinearLayout {
                 if (splitter) {
                     String value = edit.getText().toString();
                     value = utility.splitNumberOfString(value);
-                    Converter converter = new Converter();
-                    value = converter.PersianNumberToEnglishNumber(value);
+                    value = utility.persianToEnglish(value);
                     edit.setText(value);
                     edit.setSelection(edit.getText().length());
                 }

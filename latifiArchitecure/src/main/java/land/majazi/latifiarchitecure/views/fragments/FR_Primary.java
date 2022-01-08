@@ -42,11 +42,9 @@ import butterknife.ButterKnife;
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.converter.Converter;
-import land.majazi.latifiarchitecure.manager.KeyBoardManager;
-import land.majazi.latifiarchitecure.models.GregorianDateModel;
-import land.majazi.latifiarchitecure.models.SolarDateModel;
-import land.majazi.latifiarchitecure.models.ResponseModel;
+import land.majazi.latifiarchitecure.models.MD_GregorianDate;
+import land.majazi.latifiarchitecure.models.MD_SolarDate;
+import land.majazi.latifiarchitecure.models.PrimaryModel;
 import land.majazi.latifiarchitecure.utility.Utility;
 import land.majazi.latifiarchitecure.views.adapter.AP_Loading;
 import land.majazi.latifiarchitecure.views.customs.alerts.toast.ML_Toast;
@@ -184,14 +182,14 @@ public class FR_Primary extends Fragment {
 
 
     //______________________________________________________________________________________________ checkRequest
-    public void checkErrorRequest(ResponseModel responseModel) {
-        switch (responseModel.getResponseCode()) {
+    public void checkErrorRequest(PrimaryModel primaryModel) {
+        switch (primaryModel.getResponseCode()) {
             case 401:
             case 403:
-                this.fragmentActions.unAuthorization(responseModel.getMessage());
+                this.fragmentActions.unAuthorization(primaryModel.getMessage());
                 break;
             default:
-                this.fragmentActions.actionWhenFailureRequest(responseModel.getMessage());
+                this.fragmentActions.actionWhenFailureRequest(primaryModel.getMessage());
                 break;
         }
     }
@@ -305,8 +303,7 @@ public class FR_Primary extends Fragment {
 
     //______________________________________________________________________________________________ hideKeyBoard
     public void hideKeyBoard() {
-        KeyBoardManager keyBoardManager = new KeyBoardManager();
-        keyBoardManager.hide(getActivity());
+        getUtility().hideKeyboard(getActivity());
     }
     //______________________________________________________________________________________________ hideKeyBoard
 
@@ -551,9 +548,9 @@ public class FR_Primary extends Fragment {
         PersianCalendar initDate;
 
         if (init == null) {
-            SolarDateModel _solarDateModel = getUtility().gregorianToSolarDate(new Date());
+            MD_SolarDate md_solarDate = getUtility().gregorianToSolarDate(new Date());
             initDate = new PersianCalendar();
-            initDate.setPersianDate(_solarDateModel.getIntYear(), _solarDateModel.getIntMonth(), _solarDateModel.getIntDay());
+            initDate.setPersianDate(md_solarDate.getIntYear(), md_solarDate.getIntMonth(), md_solarDate.getIntDay());
         } else {
             initDate = new PersianCalendar();
             initDate.setPersianDate(Integer.valueOf(init.substring(0, 4)).intValue(), Integer.valueOf(init.substring(5, 7)).intValue(), Integer.valueOf(init.substring(8, 10)).intValue());
@@ -571,11 +568,11 @@ public class FR_Primary extends Fragment {
 
         if (date.isEmpty() || time.isEmpty())
             return "";
-        Converter converter = new Converter();
-        date = converter.PersianNumberToEnglishNumber(date);
-        time = converter.PersianNumberToEnglishNumber(time);
 
-        GregorianDateModel gregorianDate = getUtility().solarDateToGregorian(date);
+        date = getUtility().persianToEnglish(date);
+        time = getUtility().persianToEnglish(time);
+
+        MD_GregorianDate gregorianDate = getUtility().solarDateToGregorian(date);
         String result = gregorianDate.getDateString("-");
         result = result + "T" + time;
         return result;
