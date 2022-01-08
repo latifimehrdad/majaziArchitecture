@@ -15,36 +15,27 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.BindingAdapter;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.manager.SolarDateManager;
 import pl.droidsonroids.gif.GifImageView;
 
 public class ML_Button extends LinearLayout {
 
-    private Context context;
     private TypedArray ta;
-    private SolarDateManager solarDateManager;
     private String text;
     private String waitText;
 
     private TextView textView;
-    private ImageView imageIcon;
     private GifImageView gifImageView;
 
-    private Drawable normalBack;
-    private Drawable waitingBack;
-    private Drawable icon;
-    private int iconTint;
+//    private Drawable normalBack;
+//    private Drawable waitingBack;
 
+    private int iconTint;
     private int textColor;
-    private int textWaitingColor;
-    private int iconDirection;
-    private boolean enableLoading = true;
     private boolean click;
 
     //______________________________________________________________________________________________ ML_Button
     public ML_Button(Context context) {
         super(context);
-        this.context = context;
     }
     //______________________________________________________________________________________________ ML_Button
 
@@ -52,42 +43,27 @@ public class ML_Button extends LinearLayout {
     //______________________________________________________________________________________________ ML_Button
     public ML_Button(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
-        init(attrs);
+        ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_Button);
+        configLayout(context);
     }
     //______________________________________________________________________________________________ ML_Button
 
 
-    //______________________________________________________________________________________________ init
-    private void init(AttributeSet attrs) {
-        solarDateManager = new SolarDateManager();
-        ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_Button);
-        configLayout();
-    }
-    //______________________________________________________________________________________________ init
-
-
     //______________________________________________________________________________________________ configLayout
-    private void configLayout() {
-        normalBack = ta.getDrawable(R.styleable.ML_Button_normalBack);
-        waitingBack = ta.getDrawable(R.styleable.ML_Button_waitingBack);
+    private void configLayout(Context context) {
         click = false;
-        iconDirection = ta.getInt(R.styleable.ML_Button_buttonIconDirection, 1);
         waitText = ta.getString(R.styleable.ML_Button_waitingText);
-        enableLoading = true;
-        setBackground(normalBack);
+        setBackground(ta.getDrawable(R.styleable.ML_Button_normalBack));
         setGravity(Gravity.CENTER);
         setOrientation(HORIZONTAL);
-        if (iconDirection == 1) {
-            configTextView();
-            configDelimiterLayout();
-            configIcon();
-            configGif();
+        if (ta.getInt(R.styleable.ML_Button_buttonIconDirection, 1) == 1) {
+            configTextView(context);
+            configDelimiterLayout(context);
+            configGif(context);
         } else {
-            configGif();
-            configIcon();
-            configDelimiterLayout();
-            configTextView();
+            configGif(context);
+            configDelimiterLayout(context);
+            configTextView(context);
         }
 
     }
@@ -95,7 +71,7 @@ public class ML_Button extends LinearLayout {
 
 
     //______________________________________________________________________________________________ configTextView
-    private void configTextView() {
+    private void configTextView(Context context) {
         int textSize = (int) (ta.getDimensionPixelSize(R.styleable.ML_Button_textSize, 0) / getResources().getDisplayMetrics().density);
         if (textSize == 0)
             return;
@@ -105,7 +81,6 @@ public class ML_Button extends LinearLayout {
         LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
 
         textColor = ta.getColor(R.styleable.ML_Button_android_textColor, 0);
-        textWaitingColor = ta.getColor(R.styleable.ML_Button_textWaitingColor, textColor);
         textView.setTextColor(textColor);
 
 
@@ -138,7 +113,7 @@ public class ML_Button extends LinearLayout {
 
 
     //______________________________________________________________________________________________ configDelimiterLayout
-    private void configDelimiterLayout() {
+    private void configDelimiterLayout(Context context) {
 
 
         int delimiterWidth = (int) (ta.getDimension(R.styleable.ML_Button_delimiterWidth, 0));
@@ -165,35 +140,14 @@ public class ML_Button extends LinearLayout {
 
 
     //______________________________________________________________________________________________ configIcon
-    private void configIcon() {
-        imageIcon = new ImageView(context);
-        int width = (int) (ta.getDimension(R.styleable.ML_Button_iconWidth, 0));
-        int height = (int) (ta.getDimension(R.styleable.ML_Button_iconHeight, 0));
-        LayoutParams params = new LayoutParams(width, height);
-        imageIcon.setLayoutParams(params);
-        icon = ta.getDrawable(R.styleable.ML_Button_icon);
+    private void configGif(Context context) {
         iconTint = ta.getColor(R.styleable.ML_Button_iconTint, 0);
-        setIcon(icon, iconTint);
-        addView(imageIcon, params);
-    }
-    //______________________________________________________________________________________________ configIcon
-
-
-    //______________________________________________________________________________________________ configIcon
-    private void configGif() {
-        int gif = ta.getResourceId(R.styleable.ML_Button_gifLoading, 0);
-        if (gif == 0)
-            return;
-
-        enableLoading = ta.getBoolean(R.styleable.ML_Button_ml_enableLoading, true);
-
         gifImageView = new GifImageView(context);
         int width = (int) (ta.getDimension(R.styleable.ML_Button_iconWidth, 0));
         int height = (int) (ta.getDimension(R.styleable.ML_Button_iconHeight, 0));
         LayoutParams params = new LayoutParams(width, height);
         gifImageView.setLayoutParams(params);
-        gifImageView.setImageResource(gif);
-        gifImageView.setVisibility(GONE);
+        setIcon(ta.getDrawable(R.styleable.ML_Button_icon), iconTint);
         addView(gifImageView, params);
     }
     //______________________________________________________________________________________________ configIcon
@@ -201,9 +155,8 @@ public class ML_Button extends LinearLayout {
 
     //______________________________________________________________________________________________ setIcon
     public void setIcon(Drawable icon, int iconTint) {
-        this.icon = icon;
-        imageIcon.setImageDrawable(icon);
-        imageIcon.setColorFilter(iconTint);
+        gifImageView.setImageDrawable(icon);
+        gifImageView.setColorFilter(iconTint);
     }
     //______________________________________________________________________________________________ setIcon
 
@@ -212,16 +165,14 @@ public class ML_Button extends LinearLayout {
     public void startLoading() {
         click = true;
 
-        if (waitingBack == null)
-            waitingBack = normalBack;
-
-        setBackground(waitingBack);
+        if (ta.getDrawable(R.styleable.ML_Button_waitingBack) != null)
+            setBackground(ta.getDrawable(R.styleable.ML_Button_waitingBack));
 
         if (textView != null) {
-            textView.setTextColor(textWaitingColor);
+            textView.setTextColor(ta.getColor(R.styleable.ML_Button_textWaitingColor, textColor));
         }
 
-        if (!enableLoading)
+        if (!ta.getBoolean(R.styleable.ML_Button_ml_enableLoading, true))
             return;
 
         if (waitText != null) {
@@ -233,8 +184,7 @@ public class ML_Button extends LinearLayout {
             }
         }
 
-        gifImageView.setVisibility(VISIBLE);
-        imageIcon.setVisibility(GONE);
+        gifImageView.setImageDrawable(ta.getDrawable(R.styleable.ML_Button_gifLoading));
 
     }
     //______________________________________________________________________________________________ startLoading
@@ -244,17 +194,14 @@ public class ML_Button extends LinearLayout {
     public void stopLoading() {
 
         click = false;
-        if (gifImageView != null) {
-            gifImageView.setVisibility(GONE);
-            imageIcon.setVisibility(VISIBLE);
-        }
+        gifImageView.setImageDrawable(ta.getDrawable(R.styleable.ML_Button_icon));
 
         if (textView != null) {
             textView.setTextColor(textColor);
             textView.setText(text);
         }
 
-        setBackground(normalBack);
+        setBackground(ta.getDrawable(R.styleable.ML_Button_normalBack));
 
     }
     //______________________________________________________________________________________________ stopLoading
@@ -267,27 +214,13 @@ public class ML_Button extends LinearLayout {
     //______________________________________________________________________________________________ isClick
 
 
-    //______________________________________________________________________________________________ setCustomBackgroundDrawable
-    public void setCustomBackgroundDrawable(Drawable drawable) {
-        normalBack = drawable;
-        setBackground(normalBack);
-    }
-    //______________________________________________________________________________________________ setCustomBackgroundDrawable
-
-
-    //______________________________________________________________________________________________ setBackgroundDefaultDrawable
-    public void setBackgroundDefaultDrawable(int drawable) {
-        setBackground(normalBack);
-    }
-    //______________________________________________________________________________________________ setBackgroundDefaultDrawable
-
 
     //______________________________________________________________________________________________ setTextAndTintDefaultColor
     public void setTextAndTintDefaultColor() {
         if (textView != null)
             textView.setTextColor(textColor);
-        if (imageIcon != null)
-            imageIcon.setColorFilter(iconTint);
+        if (gifImageView != null)
+            gifImageView.setColorFilter(iconTint);
     }
     //______________________________________________________________________________________________ setTextAndTintDefaultColor
 
@@ -296,8 +229,8 @@ public class ML_Button extends LinearLayout {
     public void setTextAndTintColor(int color) {
         if (textView != null)
             textView.setTextColor(color);
-        if (imageIcon != null)
-            imageIcon.setColorFilter(color);
+        if (gifImageView != null)
+            gifImageView.setColorFilter(color);
 
     }
     //______________________________________________________________________________________________ setTextAndTintColor
@@ -327,15 +260,6 @@ public class ML_Button extends LinearLayout {
     //______________________________________________________________________________________________ setText
 
 
-    //______________________________________________________________________________________________ setNormalBack
-    @BindingAdapter("normalBack")
-    public static void setNormalBack(ML_Button view, Drawable normalBack) {
-        view.normalBack = normalBack;
-        view.setBackground(normalBack);
-    }
-    //______________________________________________________________________________________________ setNormalBack
-
-
     //______________________________________________________________________________________________ getText
     public String getText() {
         return text;
@@ -356,13 +280,5 @@ public class ML_Button extends LinearLayout {
     }
     //______________________________________________________________________________________________ getTextView
 
-
-    //______________________________________________________________________________________________ setIcon
-    @BindingAdapter("icon")
-    public static void setIcon(ML_Button view, Drawable icon) {
-        view.icon = icon;
-        view.imageIcon.setImageDrawable(icon);
-    }
-    //______________________________________________________________________________________________ setIcon
 
 }

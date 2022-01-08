@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MLToast.showToast(getApplicationContext(), "سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام", getResources().getDrawable(R.drawable.toast_warning), getResources().getColor(R.color.red));
 
     }
 

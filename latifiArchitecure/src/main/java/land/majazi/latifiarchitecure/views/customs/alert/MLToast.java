@@ -85,10 +85,8 @@ public class MLToast extends androidx.appcompat.widget.AppCompatTextView {
             mlToast.handler = null;
             mlToast.runnable = null;
         }
-        if (mlToast != null) {
-            mlToast.setAnimation(null);
-            mlToast.setVisibility(GONE);
-        }
+        mlToast.setAnimation(null);
+        mlToast.setVisibility(GONE);
     }
     //______________________________________________________________________________________________ hide
 
