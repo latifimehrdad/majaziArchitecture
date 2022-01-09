@@ -3,7 +3,6 @@ package land.majazi.latifiarchitecure.views.customs.timeview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -17,9 +16,9 @@ import androidx.core.content.res.ResourcesCompat;
 
 import land.majazi.latifiarchitecure.R;
 
-public class ML_AnimationTime extends LinearLayout {
+public class MLAnimationTime extends LinearLayout {
 
-    private Context context;
+    private final Context context;
     private TypedArray ta;
 
     private TextView textViewHourCurrent;
@@ -31,15 +30,10 @@ public class ML_AnimationTime extends LinearLayout {
     private TextView textViewSecondCurrent;
     private TextView textViewSecondNext;
 
-    private Drawable normalBack;
-    private boolean elapseTime;
     private Animation animationExit;
     private Animation animationEnter;
 
-    private int showing;
-    private int textColor;
     private int textSize;
-    private int fontFamilyId;
 
     private int hour;
     private int minute;
@@ -47,7 +41,7 @@ public class ML_AnimationTime extends LinearLayout {
 
 
     //______________________________________________________________________________________________ ML_AnimationTime
-    public ML_AnimationTime(Context context) {
+    public MLAnimationTime(Context context) {
         super(context);
         this.context = context;
     }
@@ -55,7 +49,7 @@ public class ML_AnimationTime extends LinearLayout {
 
 
     //______________________________________________________________________________________________ ML_AnimationTime
-    public ML_AnimationTime(Context context, @Nullable AttributeSet attrs) {
+    public MLAnimationTime(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init(attrs);
@@ -65,12 +59,9 @@ public class ML_AnimationTime extends LinearLayout {
 
     //______________________________________________________________________________________________ init
     private void init(AttributeSet attrs) {
-        ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_AnimationTime);
-        showing = ta.getInt(R.styleable.ML_AnimationTime_showing, 0);
-        elapseTime = ta.getBoolean(R.styleable.ML_AnimationTime_elapseTime, false);
-
+        ta = getContext().obtainStyledAttributes(attrs, R.styleable.MLAnimationTime);
         configLayout();
-        switch (showing) {
+        switch (ta.getInt(R.styleable.MLAnimationTime_showing, 0)) {
             case 0:
                 configSecond();
                 break;
@@ -98,11 +89,8 @@ public class ML_AnimationTime extends LinearLayout {
         setBackgroundColor(context.getResources().getColor(R.color.ML_Transparent));
         setGravity(Gravity.CENTER);
         setOrientation(HORIZONTAL);
-        normalBack = ta.getDrawable(R.styleable.ML_AnimationTime_normalBack);
-        textColor = ta.getColor(R.styleable.ML_AnimationTime_android_textColor, 0);
-        textSize = (int) (ta.getDimensionPixelSize(R.styleable.ML_AnimationTime_textSize, 0) / getResources().getDisplayMetrics().density);
-        fontFamilyId = ta.getResourceId(R.styleable.ML_AnimationTime_fontFamily, 0);
-        second = ta.getInt(R.styleable.ML_AnimationTime_second, 0);
+        textSize = (int) (ta.getDimensionPixelSize(R.styleable.MLAnimationTime_textSize, 0) / getResources().getDisplayMetrics().density);
+        second = ta.getInt(R.styleable.MLAnimationTime_second, 0);
         hour = second / 3600;
         minute = (second % 3600) / 60;
         second = second % 60;
@@ -112,9 +100,9 @@ public class ML_AnimationTime extends LinearLayout {
 
     //______________________________________________________________________________________________ addSeparator
     private void addSeparator() {
-        int separatorColor = ta.getColor(R.styleable.ML_AnimationTime_separatorTimeColor, 0);
+        int separatorColor = ta.getColor(R.styleable.MLAnimationTime_separatorTimeColor, 0);
         if (separatorColor == 0)
-            separatorColor = textColor;
+            separatorColor = ta.getColor(R.styleable.MLAnimationTime_android_textColor, 0);
 
         TextView textView = new TextView(context);
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -124,9 +112,10 @@ public class ML_AnimationTime extends LinearLayout {
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setText(":");
         textView.setMaxLines(1);
+        int fontFamilyId = ta.getResourceId(R.styleable.MLAnimationTime_fontFamily, 0);
         if (fontFamilyId > 0)
             textView.setTypeface(ResourcesCompat.getFont(getContext(), fontFamilyId));
-        int gravity = ta.getInt(R.styleable.ML_AnimationTime_gravity, 0x11);
+        int gravity = ta.getInt(R.styleable.MLAnimationTime_gravity, 0x11);
         textView.setGravity(gravity);
         params.setMargins(5, 0, 5, 0);
         textView.setLayoutParams(params);
@@ -138,15 +127,16 @@ public class ML_AnimationTime extends LinearLayout {
     //______________________________________________________________________________________________ configTextView
     private TextView configTextView() {
         TextView textView = new TextView(context);
-        textView.setBackground(normalBack);
+        textView.setBackground(ta.getDrawable(R.styleable.MLAnimationTime_normalBack));
         LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
         textView.setPadding(25, 0, 25, 0);
-        textView.setTextColor(textColor);
+        textView.setTextColor(ta.getColor(R.styleable.MLAnimationTime_android_textColor, 0));
         textView.setTextSize(textSize);
         textView.setMaxLines(1);
+        int fontFamilyId = ta.getResourceId(R.styleable.MLAnimationTime_fontFamily, 0);
         if (fontFamilyId > 0)
             textView.setTypeface(ResourcesCompat.getFont(getContext(), fontFamilyId));
-        int gravity = ta.getInt(R.styleable.ML_AnimationTime_gravity, 0x11);
+        int gravity = ta.getInt(R.styleable.MLAnimationTime_gravity, 0x11);
         textView.setGravity(gravity);
         textView.setLayoutParams(params);
         return textView;
@@ -217,13 +207,13 @@ public class ML_AnimationTime extends LinearLayout {
         int nMinute = (totalSecond % 3600) / 60;
         int nSecond = totalSecond % 60;
 
-        if (showing > 1)
+        if (ta.getInt(R.styleable.MLAnimationTime_showing, 0) > 1)
             if (nHour != hour) {
                 hour = nHour;
                 changeHour();
             }
 
-        if (showing > 0)
+        if (ta.getInt(R.styleable.MLAnimationTime_showing, 0) > 0)
             if (nMinute != minute) {
                 minute = nMinute;
                 changeMinute();
@@ -305,7 +295,7 @@ public class ML_AnimationTime extends LinearLayout {
 
     //______________________________________________________________________________________________ configAnimation
     private void configAnimation() {
-        if (elapseTime) {
+        if (ta.getBoolean(R.styleable.MLAnimationTime_elapseTime, false)) {
             animationExit = AnimationUtils.loadAnimation(context, R.anim.slide_out_top);
             animationEnter = AnimationUtils.loadAnimation(context, R.anim.slide_in_bottom);
         } else {

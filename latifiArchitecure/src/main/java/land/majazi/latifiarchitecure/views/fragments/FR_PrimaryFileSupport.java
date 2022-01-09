@@ -18,7 +18,7 @@ import java.io.File;
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.manager.FileManager;
 import land.majazi.latifiarchitecure.views.activity.RecordVideo;
-import land.majazi.latifiarchitecure.views.customs.buttons.ML_Button;
+import land.majazi.latifiarchitecure.views.customs.buttons.MLButton;
 
 import static android.app.Activity.RESULT_OK;
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
@@ -45,8 +45,8 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         }
         uriFromCamera = null;
         chooseImageDialog = createDialog(R.layout.dialog_choose_image, true);
-        ML_Button ml_buttonGallery = chooseImageDialog.findViewById(R.id.ml_buttonGallery);
-        ML_Button ml_buttonTakePhoto = chooseImageDialog.findViewById(R.id.ml_buttonTakePhoto);
+        MLButton ml_buttonGallery = chooseImageDialog.findViewById(R.id.ml_buttonGallery);
+        MLButton ml_buttonTakePhoto = chooseImageDialog.findViewById(R.id.ml_buttonTakePhoto);
         TextView textViewDialogTitle = chooseImageDialog.findViewById(R.id.textViewDialogTitle);
         textViewDialogTitle.setText(title);
         ml_buttonGallery.setTitle("گالری");
@@ -94,7 +94,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         applicationName = appName;
         FileManager fileManager = new FileManager();
         File fileFromCamera = fileManager.getOutputMediaFile(MEDIA_TYPE_VIDEO, applicationName);
-        uriFromCamera = fileManager.getUriFromFile(getContext(), fileFromCamera);
+        uriFromCamera = fileManager.getUriFromFile(getActivity(), fileFromCamera);
         fileManager = null;
         Intent intent = new Intent(getContext(), RecordVideo.class);
         intent.putExtra("INTENT_NAME_VIDEO_PATH", fileFromCamera.getPath());
@@ -140,10 +140,9 @@ public class FR_PrimaryFileSupport extends FR_Primary {
                 if (crop)
                     showDialogCropImage(uriFromCamera);
                 else
-                    getFragmentActions().cropImage(uriFromCamera);
+                    cropImage(uriFromCamera);
             } else if (requestCode == REQUEST_TAKE_VIDEO) {
-                if (getFragmentActions() != null)
-                    getFragmentActions().cropImage(uriFromCamera);
+                cropImage(uriFromCamera);
             }
         }
     }
@@ -164,7 +163,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         }
 
         cropImageDialog = createDialog(R.layout.dialog_crop_image, true);
-        ML_Button ml_buttonCrop = cropImageDialog.findViewById(R.id.ml_buttonCrop);
+        MLButton ml_buttonCrop = cropImageDialog.findViewById(R.id.ml_buttonCrop);
         ml_buttonCrop.setTitle("تایید");
         CropImageView mCropView = cropImageDialog.findViewById(R.id.cropImageView);
         mCropView.load(uri).execute(getLoadCallback());
@@ -233,8 +232,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
     private SaveCallback mSaveCallback = new SaveCallback() {
         @Override
         public void onSuccess(Uri outputUri) {
-            if (getFragmentActions() != null)
-                getFragmentActions().cropImage(outputUri);
+            cropImage(outputUri);
             if (cropImageDialog != null) {
                 cropImageDialog.dismiss();
                 cropImageDialog = null;

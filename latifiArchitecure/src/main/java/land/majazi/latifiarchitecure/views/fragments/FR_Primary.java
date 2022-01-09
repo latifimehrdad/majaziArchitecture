@@ -45,60 +45,25 @@ import land.majazi.latifiarchitecure.manager.KeyBoardManager;
 import land.majazi.latifiarchitecure.models.ResponseModel;
 import land.majazi.latifiarchitecure.manager.SolarDateManager;
 import land.majazi.latifiarchitecure.views.adapter.AP_Loading;
-import land.majazi.latifiarchitecure.views.customs.alert.MLToast;
 import land.majazi.latifiarchitecure.views.customs.loadings.RecyclerViewSkeletonScreen;
 import land.majazi.latifiarchitecure.views.customs.loadings.Skeleton;
 import land.majazi.latifiarchitecure.views.customs.loadings.ViewSkeletonScreen;
-import land.majazi.latifiarchitecure.views.customs.text.ML_TextView;
-import land.majazi.latifiarchitecure.views.dialog.PersianPicker.ML_PersianPickerDialog;
 
 
-public class FR_Primary extends Fragment {
+public class FR_Primary extends Fragment implements FragmentAction{
 
+    private static String fragmentName;
+    public static int firstFragmentAction = 0;
 
-    private Activity activity;
     private OnBackPressedCallback pressedCallback;
-    private fragmentActions fragmentActions;
     private View view;
     private NavController navController;
-    private AP_Loading ap_loading;
     private RecyclerViewSkeletonScreen skeletonScreen;
     private ViewSkeletonScreen viewSkeletonScreen;
-    private boolean doubleExitApplication = false;
-    public static int firstFragmentAction = 0;
     public final int RESULT_ENABLE = 11;
     public int biometricAction;
-    private static String fragmentName;
-//    private List<MD_ViewLoading> md_viewLoadings;
+    private boolean doubleExitApplication = false;
 
-
-    //______________________________________________________________________________________________ fragmentActions
-    public interface fragmentActions {
-
-        default void actionWhenFailureRequest(String error) { }
-
-        default void backButtonPressed() {}
-
-        default void permissionWasGranted(){}
-
-        default void clickPressed(){}
-
-        default void init(){}
-
-        default void cropImage(Uri uri){}
-
-        default void unAuthorization(String error){}
-
-        default void startView(){}
-
-        default void stopView(){}
-
-        default void bioMetric(int biometricAction){}
-
-        default void bioMetricFailed(int biometricAction){}
-
-    }
-    //______________________________________________________________________________________________ fragmentActions
 
 
     //______________________________________________________________________________________________ FR_Primary
@@ -112,11 +77,10 @@ public class FR_Primary extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
         pressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                fragmentActions.backButtonPressed();
+                backButtonPressed();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(this, pressedCallback);
@@ -129,18 +93,10 @@ public class FR_Primary extends Fragment {
     public void onStart() {
         super.onStart();
         navController = Navigation.findNavController(getView());
-        if (fragmentActions != null)
-            fragmentActions.startView();
+        startView();
     }
     //______________________________________________________________________________________________ onStart
 
-
-    //______________________________________________________________________________________________ getContext
-    @Override
-    public Activity getContext() {
-        return activity;
-    }
-    //______________________________________________________________________________________________ getContext
 
 
     //______________________________________________________________________________________________ onDestroy
@@ -168,13 +124,12 @@ public class FR_Primary extends Fragment {
 
 
     //______________________________________________________________________________________________ setView
-    public void setView(View view, fragmentActions fragmentActions) {
+    public void setView(View view) {
         this.view = view;
-        this.fragmentActions = fragmentActions;
-        ButterKnife.bind(this, getView());
-        this.fragmentActions.init();
-        this.fragmentActions.clickPressed();
-        fragmentName = fragmentActions.getClass().toString();
+        ButterKnife.bind(this, view);
+        fragmentName = this.getClass().toString();
+        init();
+        clickPressed();
     }
     //______________________________________________________________________________________________ setView
 
@@ -184,10 +139,10 @@ public class FR_Primary extends Fragment {
         switch (responseModel.getResponseCode()) {
             case 401:
             case 403:
-                this.fragmentActions.unAuthorization(responseModel.getMessage());
+                this.unAuthorization(responseModel.getMessage());
                 break;
             default:
-                this.fragmentActions.actionWhenFailureRequest(responseModel.getMessage());
+                this.actionWhenFailureRequest(responseModel.getMessage());
                 break;
         }
     }
@@ -247,9 +202,9 @@ public class FR_Primary extends Fragment {
         }
 
         if (accessPermission)
-            fragmentActions.permissionWasGranted();
+            permissionWasGranted();
         else
-            getContext().onBackPressed();
+            this.getActivity().onBackPressed();
 
     }
     //______________________________________________________________________________________________ onRequestPermissionsResult
@@ -282,7 +237,7 @@ public class FR_Primary extends Fragment {
     public void goBack() {
         hideKeyBoard();
         pressedCallback.remove();
-        getContext().onBackPressed();
+        this.getActivity().onBackPressed();
     }
     //______________________________________________________________________________________________ goBack
 
@@ -330,7 +285,7 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ setRecyclerLoading
     public void setRecyclerLoading(RecyclerView recyclerLoading, int layout, @ColorRes int Color) {
 
-        ap_loading = new AP_Loading();
+        AP_Loading ap_loading = new AP_Loading();
         recyclerLoading.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         skeletonScreen = Skeleton.bind(recyclerLoading)
                 .adapter(ap_loading)
@@ -349,7 +304,7 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ setRecyclerLoading
     public void setRecyclerLoading(RecyclerView recyclerLoading, int layout, @ColorRes int Color, int count) {
 
-        ap_loading = new AP_Loading();
+        AP_Loading ap_loading = new AP_Loading();
         recyclerLoading.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         skeletonScreen = Skeleton.bind(recyclerLoading)
                 .adapter(ap_loading)
@@ -372,9 +327,6 @@ public class FR_Primary extends Fragment {
             skeletonScreen.hide();
             skeletonScreen = null;
         }
-
-        if (ap_loading != null)
-            ap_loading = null;
     }
     //______________________________________________________________________________________________ stopLoadingRecycler
 
@@ -485,6 +437,7 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ gotoUrl
 
 
+/*
     //______________________________________________________________________________________________ chooseDate
     public void chooseDate(ML_TextView ml_textView, String title, String initDate) {
 
@@ -540,6 +493,7 @@ public class FR_Primary extends Fragment {
 
     }
     //______________________________________________________________________________________________ chooseDate
+*/
 
 
     //______________________________________________________________________________________________ getPersianCalendar
@@ -581,11 +535,13 @@ public class FR_Primary extends Fragment {
     //______________________________________________________________________________________________ dateGenerate
 
 
+/*
     //______________________________________________________________________________________________ getFragmentActions
     public FR_Primary.fragmentActions getFragmentActions() {
         return fragmentActions;
     }
     //______________________________________________________________________________________________ getFragmentActions
+*/
 
 
     //______________________________________________________________________________________________ checkAndAuthenticate
@@ -599,7 +555,7 @@ public class FR_Primary extends Fragment {
             Intent intent = keyguardManager.createConfirmDeviceCredentialIntent("رمز ورود به گوشی را وارد نمایید", "از وارد کردن رمز مجازی لند خودداری نمایید");
             FR_Primary.this.startActivityForResult(intent, RESULT_ENABLE);
         } else {
-            fragmentActions.bioMetric(biometricAction);
+            bioMetric(biometricAction);
         }
     }
     //______________________________________________________________________________________________ checkAndAuthenticate
@@ -613,9 +569,9 @@ public class FR_Primary extends Fragment {
         switch (requestCode) {
             case RESULT_ENABLE:
                 if (resultCode == RESULT_OK)
-                    fragmentActions.bioMetric(biometricAction);
+                    bioMetric(biometricAction);
                 else
-                    fragmentActions.bioMetricFailed(biometricAction);
+                    bioMetricFailed(biometricAction);
                 break;
         }
     }

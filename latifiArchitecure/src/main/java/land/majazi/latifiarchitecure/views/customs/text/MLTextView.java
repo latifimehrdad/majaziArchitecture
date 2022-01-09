@@ -14,111 +14,91 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.manager.SolarDateManager;
 import land.majazi.latifiarchitecure.utility.Splitter;
 import land.majazi.latifiarchitecure.utility.Validator;
 
-public class ML_TextView extends LinearLayout {
+public class MLTextView extends LinearLayout {
 
-    private Context context;
     private TypedArray ta;
-    private SolarDateManager solarDateManager;
     private Object additionalValue;
-    private String text;
-    private boolean splitter;
-    private int validationType;
 
     private TextView textView;
     private ImageView imageIcon;
-    private String errorText = "";
-    private Drawable normalBack;
-    private Drawable emptyBack;
-    private Drawable icon;
+
     private Drawable iconError;
-    private int iconTint;
-    private int iconErrorTint;
+
+    private String text;
+
 
     //______________________________________________________________________________________________ ML_TextView
-    public ML_TextView(Context context) {
+    public MLTextView(Context context) {
         super(context);
-        this.context = context;
+
     }
     //______________________________________________________________________________________________ ML_TextView
 
 
     //______________________________________________________________________________________________ ML_TextView
-    public ML_TextView(Context context, @Nullable AttributeSet attrs) {
+    public MLTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
-        init(attrs);
+        ta = getContext().obtainStyledAttributes(attrs, R.styleable.MLTextView);
+        configLayout(context);
     }
     //______________________________________________________________________________________________ ML_TextView
 
-
-    //______________________________________________________________________________________________ init
-    private void init(AttributeSet attrs) {
-        solarDateManager = new SolarDateManager();
-        ta = getContext().obtainStyledAttributes(attrs, R.styleable.ML_TextView);
-        configLayout();
-    }
-    //______________________________________________________________________________________________ init
 
 
     //______________________________________________________________________________________________ configLayout
-    private void configLayout() {
-        normalBack = ta.getDrawable(R.styleable.ML_TextView_normalBack);
-        emptyBack = ta.getDrawable(R.styleable.ML_TextView_emptyBack);
-        setBackground(normalBack);
+    private void configLayout(Context context) {
+        setBackground(ta.getDrawable(R.styleable.MLTextView_normalBack));
         setGravity(Gravity.CENTER);
         setOrientation(HORIZONTAL);
-        configTextView();
-        configDelimiterLayout();
-        configIcon();
+        configTextView(context);
+        configDelimiterLayout(context);
+        configIcon(context);
 
     }
     //______________________________________________________________________________________________ configLayout
 
 
     //______________________________________________________________________________________________ configTextView
-    private void configTextView() {
+    private void configTextView(Context context) {
 
         textView = new TextView(context);
         LayoutParams params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
 
-        int textColor = ta.getColor(R.styleable.ML_TextView_android_textColor, 0);
+        int textColor = ta.getColor(R.styleable.MLTextView_android_textColor, 0);
         textView.setTextColor(textColor);
 
-        String hint = ta.getString(R.styleable.ML_TextView_hint);
+        String hint = ta.getString(R.styleable.MLTextView_hint);
         textView.setHint(hint);
 
-        int textSize = (int) (ta.getDimensionPixelSize(R.styleable.ML_TextView_textSize, 0) / getResources().getDisplayMetrics().density);
+        int textSize = (int) (ta.getDimensionPixelSize(R.styleable.MLTextView_textSize, 0) / getResources().getDisplayMetrics().density);
         textView.setTextSize(textSize);
 
-        int maxLine = ta.getInteger(R.styleable.ML_TextView_maxLine, 1);
+        int maxLine = ta.getInteger(R.styleable.MLTextView_maxLine, 1);
         textView.setMaxLines(maxLine);
-        errorText = ta.getString(R.styleable.ML_TextView_errorText);
-        validationType = ta.getInt(R.styleable.ML_TextView_validationType, 0);
 
-        int maxLength = ta.getInteger(R.styleable.ML_TextView_maxLength, 100);
+        int maxLength = ta.getInteger(R.styleable.MLTextView_maxLength, 100);
         InputFilter[] fArray = new InputFilter[1];
         fArray[0] = new InputFilter.LengthFilter(maxLength);
         textView.setFilters(fArray);
 
-        int fontFamilyId = ta.getResourceId(R.styleable.ML_TextView_fontFamily, 0);
+        int fontFamilyId = ta.getResourceId(R.styleable.MLTextView_fontFamily, 0);
         if (fontFamilyId > 0)
             textView.setTypeface(ResourcesCompat.getFont(getContext(), fontFamilyId));
 
-        text = ta.getString(R.styleable.ML_TextView_text);
+        text = ta.getString(R.styleable.MLTextView_text);
         textView.setText(text);
 
-        int gravity = ta.getInt(R.styleable.ML_TextView_gravity, 0x11);
+        int gravity = ta.getInt(R.styleable.MLTextView_gravity, 0x11);
         textView.setGravity(gravity);
 
-        textView.setBackgroundColor(context.getResources().getColor(R.color.ML_Transparent));
+        textView.setBackgroundColor(context.getResources().getColor(R.color.ML_Transparent, context.getTheme()));
         textView.setLayoutParams(params);
         textView.setPadding(10, 1, 10, 1);
 
-        splitter = ta.getBoolean(R.styleable.ML_TextView_splitter, false);
+
 
         addView(textView, params);
 
@@ -127,18 +107,18 @@ public class ML_TextView extends LinearLayout {
 
 
     //______________________________________________________________________________________________ configDelimiterLayout
-    private void configDelimiterLayout() {
+    private void configDelimiterLayout(Context context) {
         LinearLayout delimiter = new LinearLayout(context);
 
-        int delimiterWidth = (int) (ta.getDimension(R.styleable.ML_TextView_delimiterWidth, 0));
+        int delimiterWidth = (int) (ta.getDimension(R.styleable.MLTextView_delimiterWidth, 0));
         LayoutParams params = new LayoutParams(delimiterWidth, LayoutParams.MATCH_PARENT);
 
-        int marginLeft = (int) (ta.getDimensionPixelSize(R.styleable.ML_TextView_delimiterMarginLeft, 0));
-        int marginTop = (int) (ta.getDimensionPixelSize(R.styleable.ML_TextView_delimiterMarginTop, 0));
-        int marginRight = (int) (ta.getDimensionPixelSize(R.styleable.ML_TextView_delimiterMarginRight, 0));
-        int marginBottom = (int) (ta.getDimensionPixelSize(R.styleable.ML_TextView_delimiterMarginBottom, 0));
+        int marginLeft = ta.getDimensionPixelSize(R.styleable.MLTextView_delimiterMarginLeft, 0);
+        int marginTop = ta.getDimensionPixelSize(R.styleable.MLTextView_delimiterMarginTop, 0);
+        int marginRight = ta.getDimensionPixelSize(R.styleable.MLTextView_delimiterMarginRight, 0);
+        int marginBottom = ta.getDimensionPixelSize(R.styleable.MLTextView_delimiterMarginBottom, 0);
         params.setMargins(marginLeft, marginTop, marginRight, marginBottom);
-        Drawable back = ta.getDrawable(R.styleable.ML_TextView_delimiterBack);
+        Drawable back = ta.getDrawable(R.styleable.MLTextView_delimiterBack);
         delimiter.setLayoutParams(params);
         delimiter.setBackground(back);
         addView(delimiter, params);
@@ -147,19 +127,16 @@ public class ML_TextView extends LinearLayout {
 
 
     //______________________________________________________________________________________________ configIcon
-    private void configIcon() {
+    private void configIcon(Context context) {
         imageIcon = new ImageView(context);
-        int width = (int) (ta.getDimension(R.styleable.ML_TextView_iconWidth, 0));
-        int height = (int) (ta.getDimension(R.styleable.ML_TextView_iconHeight, 0));
+        int width = (int) (ta.getDimension(R.styleable.MLTextView_iconWidth, 0));
+        int height = (int) (ta.getDimension(R.styleable.MLTextView_iconHeight, 0));
         LayoutParams params = new LayoutParams(width, height);
         imageIcon.setLayoutParams(params);
-        icon = ta.getDrawable(R.styleable.ML_TextView_icon);
-        iconTint = ta.getColor(R.styleable.ML_TextView_iconTint, 0);
-        iconError = ta.getDrawable(R.styleable.ML_TextView_iconError);
+        iconError = ta.getDrawable(R.styleable.MLTextView_iconError);
         if (iconError == null)
-            iconError = icon;
-        iconErrorTint = ta.getColor(R.styleable.ML_TextView_iconErrorTint, iconTint);
-        setIcon(icon, iconTint);
+            iconError = ta.getDrawable(R.styleable.MLTextView_icon);
+        setIcon(ta.getDrawable(R.styleable.MLTextView_icon), ta.getColor(R.styleable.MLTextView_iconTint, 0));
         addView(imageIcon, params);
     }
     //______________________________________________________________________________________________ configIcon
@@ -168,9 +145,9 @@ public class ML_TextView extends LinearLayout {
 
     //______________________________________________________________________________________________ removeError
     public void removeError() {
-        setBackground(normalBack);
+        setBackground(ta.getDrawable(R.styleable.MLTextView_normalBack));
         textView.setError(null);
-        setIcon(icon, iconTint);
+        setIcon(ta.getDrawable(R.styleable.MLTextView_icon), ta.getColor(R.styleable.MLTextView_iconTint, 0));
     }
     //______________________________________________________________________________________________ removeError
 
@@ -179,7 +156,7 @@ public class ML_TextView extends LinearLayout {
     //______________________________________________________________________________________________ setText
     public void setText(String text) {
         this.text = text;
-        if (splitter) {
+        if (ta.getBoolean(R.styleable.MLTextView_splitter, false)) {
             String value = text;
             value = new Splitter().split(value);
             textView.setText(value);
@@ -196,7 +173,7 @@ public class ML_TextView extends LinearLayout {
         if (text == null)
             return null;
 
-        if (splitter) {
+        if (ta.getBoolean(R.styleable.MLTextView_splitter, false)) {
             text = text.replaceAll(",", "");
             text = text.replaceAll("٬", "");
         }
@@ -216,8 +193,8 @@ public class ML_TextView extends LinearLayout {
 
     //______________________________________________________________________________________________ setErrorLayout
     public void setErrorLayout(String error) {
-        setIcon(iconError, iconErrorTint);
-        setBackground(emptyBack);
+        setIcon(iconError, ta.getColor(R.styleable.MLTextView_iconErrorTint, ta.getColor(R.styleable.MLTextView_iconTint, 0)));
+        setBackground(ta.getDrawable(R.styleable.MLTextView_emptyBack));
         getTextView().setError(error);
         getTextView().requestFocus();
     }
@@ -233,8 +210,7 @@ public class ML_TextView extends LinearLayout {
 
 
     //______________________________________________________________________________________________ setIcon
-    public void setIcon(Drawable icon, int iconTint) {
-        this.icon = icon;
+    private void setIcon(Drawable icon, int iconTint) {
         imageIcon.setImageDrawable(icon);
         imageIcon.setColorFilter(iconTint);
     }
@@ -259,7 +235,7 @@ public class ML_TextView extends LinearLayout {
     public boolean checkValidation() {
         boolean result = true;
         Validator validator = new Validator();
-        switch (validationType) {
+        switch (ta.getInt(R.styleable.MLTextView_validationType, 0)) {
             case 0://none
                 result = true;
                 break;
@@ -304,7 +280,7 @@ public class ML_TextView extends LinearLayout {
         }
 
         if (!result)
-            setErrorLayout(errorText);
+            setErrorLayout(ta.getString(R.styleable.MLTextView_errorText));
 
         return result;
     }

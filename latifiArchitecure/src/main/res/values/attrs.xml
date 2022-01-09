@@ -52,9 +52,10 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_Editable">
+    <declare-styleable name="MLEditable">
         <attr name="normalBack" format="reference|color" />
         <attr name="emptyBack" format="reference|color" />
+        <attr name="fontFamily"/>
         <attr name="android:textColor"/>
         <attr name="hint" format="string"/>
         <attr name="waitingText"/>
@@ -62,7 +63,6 @@
         <attr name="maxLine" format="integer"/>
         <attr name="maxLength" format="integer"/>
         <attr name="errorText" format="string"/>
-        <attr name="fontFamily" />
         <attr name="splitter" format="boolean"/>
         <attr name="inputType">
             <flag name="none" value="0x00000000" />
@@ -113,7 +113,6 @@
             <enum name="cardNumber" value="16"/>
             <enum name="persianName" value="17"/>
         </attr>
-
         <attr name="gravity">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
@@ -155,7 +154,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_TextView">
+    <declare-styleable name="MLTextView">
         <attr name="normalBack"/>
         <attr name="emptyBack"/>
         <attr name="android:textColor"/>
@@ -184,7 +183,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_Button">
+    <declare-styleable name="MLButton">
         <attr name="normalBack"/>
         <attr name="android:textColor"/>
         <attr name="waitingBack" format="reference|color" />
@@ -216,7 +215,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_AnimationTime">
+    <declare-styleable name="MLAnimationTime">
         <attr name="normalBack"/>
         <attr name="textSize"/>
         <attr name="android:textColor"/>
@@ -256,9 +255,7 @@
         <attr name="alertAttentionIcon" format="reference" />
         <attr name="alertAttentionColor" format="color" />
         <attr name="alertTitleTextSize" format="dimension"/>
-        <attr name="alertTitleFontFamily" format="reference"/>
         <attr name="alertMessageTextSize" format="dimension"/>
-        <attr name="alertMessageFontFamily" format="reference"/>
 
     </declare-styleable>
 

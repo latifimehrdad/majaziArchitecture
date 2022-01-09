@@ -10,22 +10,14 @@
     android:orientation="vertical">
 
 
-    <ImageView
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:src="@drawable/ic_camera"
-        android:tint="@color/red"/>
-
-
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="@dimen/_20sdp"
-        android:layout_height="@dimen/_20sdp"
-        android:src="@drawable/day_loading_button"
-        android:tint="@color/red"/>
-
-
-
-
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        android:padding="@dimen/_4sdp"
+        app:navGraph="@navigation/nav_host" />
 
 
 </LinearLayout>

@@ -21,14 +21,14 @@ public class MLToast extends androidx.appcompat.widget.AppCompatTextView {
     private Drawable closeIcon;
     private static MLToast mlToast;
 
-    //______________________________________________________________________________________________ ML_Toast
+    //______________________________________________________________________________________________ MLToast
     public MLToast(Context context) {
         super(context);
     }
-    //______________________________________________________________________________________________ ML_Toast
+    //______________________________________________________________________________________________ MLToast
 
 
-    //______________________________________________________________________________________________ ML_Toast
+    //______________________________________________________________________________________________ MLToast
     public MLToast(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -48,7 +48,7 @@ public class MLToast extends androidx.appcompat.widget.AppCompatTextView {
             setTypeface(ResourcesCompat.getFont(getContext(), fontFamilyId));
         mlToast = this;
     }
-    //______________________________________________________________________________________________ ML_Toast
+    //______________________________________________________________________________________________ MLToast
 
 
 
