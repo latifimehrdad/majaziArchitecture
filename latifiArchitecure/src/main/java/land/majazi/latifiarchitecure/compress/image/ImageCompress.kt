@@ -1,4 +1,4 @@
-package land.majazi.latifiarchitecure.compress
+package land.majazi.latifiarchitecure.compress.image
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

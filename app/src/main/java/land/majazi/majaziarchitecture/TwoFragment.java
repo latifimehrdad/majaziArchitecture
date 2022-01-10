@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 
+
 import land.majazi.latifiarchitecure.views.fragments.FR_Primary;
 import land.majazi.majaziarchitecture.databinding.FragmentTwoBinding;
 
@@ -23,15 +24,5 @@ public class TwoFragment extends FR_Primary {
         return getView();
     }
 
-    @Override
-    public void init(){
-        Log.i("meri", getFragmentName());
-    }
-
-    @Override
-    public void backButtonPressed() {
-        Log.i("meri", "TwoFragment backButtonPressed");
-        goBack();
-    }
 
 }

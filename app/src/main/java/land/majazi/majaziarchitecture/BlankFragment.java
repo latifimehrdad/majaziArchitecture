@@ -1,6 +1,8 @@
 package land.majazi.majaziarchitecture;
 
+import android.Manifest;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
+import land.majazi.latifiarchitecure.converter.Converter;
 import land.majazi.latifiarchitecure.views.fragments.FR_Primary;
+import land.majazi.latifiarchitecure.views.fragments.FR_PrimaryFileSupport;
 import land.majazi.majaziarchitecture.databinding.FragmentBlankBinding;
 
 
-public class BlankFragment extends FR_Primary{
+public class BlankFragment extends FR_PrimaryFileSupport {
 
     @BindView(R.id.constraintTest)
     ConstraintLayout constraintTest;
@@ -31,21 +40,19 @@ public class BlankFragment extends FR_Primary{
             FragmentBlankBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_blank, container, false);
             setView(binding.getRoot());
             constraintTest.setOnClickListener(v -> {
-                constraintTest.setBackgroundColor(Color.GREEN);
-                    gotoOtherFragment(R.id.gotoTwo, null); });
+                showDialogChooseImage("عکس ملی", getResources().getString(R.string.app_name), true);
+//                    gotoOtherFragment(R.id.gotoTwo, null);
+            });
+
         }
 
         return getView();
     }
 
-    @Override
-    public void init(){
-        Log.i("meri", getFragmentName());
-    }
 
     @Override
-    public void backButtonPressed() {
-        Log.i("meri", "BlankFragment backButtonPressed");
+    public void cropImage(Uri uri){
+        Log.i("meri", uri.getPath());
     }
 
 }

@@ -1,18 +1,13 @@
 package land.majazi.majaziarchitecture;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 
-import java.time.LocalDateTime;
+import androidx.appcompat.app.AppCompatActivity;
 
-import land.majazi.latifiarchitecure.converter.GregorianDateToSolarDate;
-import land.majazi.latifiarchitecure.models.SolarDateModel;
-import land.majazi.latifiarchitecure.views.customs.alert.MLToast;
+import land.majazi.latifiarchitecure.views.activity.MasterActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MasterActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

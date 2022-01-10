@@ -1,53 +1,52 @@
 package land.majazi.latifiarchitecure.views.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.KeyguardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.BlurMaskFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
-import ir.hamsaa.persiandatepicker.Listener;
-import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
+import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
+import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 import land.majazi.latifiarchitecure.R;
+import land.majazi.latifiarchitecure.converter.Converter;
+import land.majazi.latifiarchitecure.manager.BiometricManager;
+import land.majazi.latifiarchitecure.manager.DialogManager;
 import land.majazi.latifiarchitecure.manager.KeyBoardManager;
+import land.majazi.latifiarchitecure.manager.PermissionManager;
 import land.majazi.latifiarchitecure.models.ResponseModel;
-import land.majazi.latifiarchitecure.manager.SolarDateManager;
+import land.majazi.latifiarchitecure.models.SolarDateModel;
+import land.majazi.latifiarchitecure.views.activity.MasterActivity;
 import land.majazi.latifiarchitecure.views.adapter.AP_Loading;
+import land.majazi.latifiarchitecure.views.customs.alert.MLToast;
 import land.majazi.latifiarchitecure.views.customs.loadings.RecyclerViewSkeletonScreen;
 import land.majazi.latifiarchitecure.views.customs.loadings.Skeleton;
 import land.majazi.latifiarchitecure.views.customs.loadings.ViewSkeletonScreen;
+import land.majazi.latifiarchitecure.views.customs.text.MLTextView;
 
 
 public class FR_Primary extends Fragment implements FragmentAction{
@@ -60,17 +59,10 @@ public class FR_Primary extends Fragment implements FragmentAction{
     private NavController navController;
     private RecyclerViewSkeletonScreen skeletonScreen;
     private ViewSkeletonScreen viewSkeletonScreen;
-    public final int RESULT_ENABLE = 11;
-    public int biometricAction;
+
+
     private boolean doubleExitApplication = false;
 
-
-
-    //______________________________________________________________________________________________ FR_Primary
-    public FR_Primary() {
-
-    }
-    //______________________________________________________________________________________________ FR_Primary
 
 
     //______________________________________________________________________________________________ onCreate
@@ -81,8 +73,7 @@ public class FR_Primary extends Fragment implements FragmentAction{
             @Override
             public void handleOnBackPressed() {
                 backButtonPressed();
-            }
-        };
+            }};
         requireActivity().getOnBackPressedDispatcher().addCallback(this, pressedCallback);
     }
     //______________________________________________________________________________________________ onCreate
@@ -92,27 +83,13 @@ public class FR_Primary extends Fragment implements FragmentAction{
     @Override
     public void onStart() {
         super.onStart();
+        if (getView() == null)
+            return;
         navController = Navigation.findNavController(getView());
         startView();
     }
     //______________________________________________________________________________________________ onStart
 
-
-
-    //______________________________________________________________________________________________ onDestroy
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-    //______________________________________________________________________________________________ onDestroy
-
-
-    //______________________________________________________________________________________________ onStop
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-    //______________________________________________________________________________________________ onStop
 
 
     //______________________________________________________________________________________________ getView
@@ -150,85 +127,36 @@ public class FR_Primary extends Fragment implements FragmentAction{
 
 
     //______________________________________________________________________________________________ showToast
-    public void showToast(LinearLayout linearLayout, String message, Drawable icon, int tintColor) {
+    public void showToast(String message, Drawable icon, int tintColor) {
 
-/*        if (message != null && !message.isEmpty())
-            MLToast.showToast(getContext(), linearLayout, message, icon, tintColor);*/
+        if (message != null && !message.isEmpty())
+            MLToast.showToast(getContext(), message, icon, tintColor);
     }
     //______________________________________________________________________________________________ showToast
 
 
-    //______________________________________________________________________________________________ getUtility
-    public SolarDateManager getUtility() {
 
-        return new SolarDateManager();
+    //______________________________________________________________________________________________ isPermissionGranted
+    public boolean isPermissionGranted(List<String> permissions) {
+        MasterActivity.fragmentAction = this;
+        return new PermissionManager().isPermissionGranted(getActivity(), permissions);
     }
-    //______________________________________________________________________________________________ getUtility
+    //______________________________________________________________________________________________ isPermissionGranted
 
-
-    //______________________________________________________________________________________________ setPermission
-    public boolean setPermission(List<String> permissions) {
-
-        List<String> listPermissionsNeeded = new ArrayList<>();
-
-        for (String permission : permissions) {
-            int check = ContextCompat.checkSelfPermission(getContext(), permission);
-            if (check != PackageManager.PERMISSION_GRANTED)
-                listPermissionsNeeded.add(permission);
-        }
-
-        if (!listPermissionsNeeded.isEmpty()) {
-            int REQUEST_PERMISSIONS_CODE_WRITE_STORAGE = 7126;
-            requestPermissions(listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
-                    REQUEST_PERMISSIONS_CODE_WRITE_STORAGE);
-            return false;
-        } else
-            return true;
-
-    }
-    //______________________________________________________________________________________________ setPermission
-
-
-    //______________________________________________________________________________________________ onRequestPermissionsResult
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        boolean accessPermission = true;
-        for (String permission : permissions) {
-            int check = ContextCompat.checkSelfPermission(getContext(), permission);
-            if (check != PackageManager.PERMISSION_GRANTED) {
-                accessPermission = false;
-                break;
-            }
-        }
-
-        if (accessPermission)
-            permissionWasGranted();
-        else
-            this.getActivity().onBackPressed();
-
-    }
-    //______________________________________________________________________________________________ onRequestPermissionsResult
 
 
     //______________________________________________________________________________________________ setVariableToNavigation
     public void setVariableToNavigation(String saveKey, String saveValue) {
-        if (getView() != null) {
-            NavController navigation = Navigation.findNavController(getView());
-            navigation.getPreviousBackStackEntry().getSavedStateHandle().set(saveKey, saveValue);
-        }
+        navController.getPreviousBackStackEntry().getSavedStateHandle().set(saveKey, saveValue);
     }
     //______________________________________________________________________________________________ setVariableToNavigation
 
 
     //______________________________________________________________________________________________ getVariableFromNavigation
     public String getVariableFromNavigation(String saveKey) {
-        if (getView() != null) {
-            NavController navigation = Navigation.findNavController(getView());
-            String value = navigation.getCurrentBackStackEntry().getSavedStateHandle().get(saveKey);
-            navigation.getCurrentBackStackEntry().getSavedStateHandle().set(saveKey, null);
-            return value;
-        } else
-            return null;
+        String value = navController.getCurrentBackStackEntry().getSavedStateHandle().get(saveKey);
+        navController.getCurrentBackStackEntry().getSavedStateHandle().set(saveKey, null);
+        return value;
     }
     //______________________________________________________________________________________________ getVariableFromNavigation
 
@@ -237,6 +165,8 @@ public class FR_Primary extends Fragment implements FragmentAction{
     public void goBack() {
         hideKeyBoard();
         pressedCallback.remove();
+        if (getActivity() == null)
+            return;
         this.getActivity().onBackPressed();
     }
     //______________________________________________________________________________________________ goBack
@@ -258,26 +188,13 @@ public class FR_Primary extends Fragment implements FragmentAction{
     public void hideKeyBoard() {
         KeyBoardManager keyBoardManager = new KeyBoardManager();
         keyBoardManager.hide(getActivity());
-
     }
     //______________________________________________________________________________________________ hideKeyBoard
 
 
     //______________________________________________________________________________________________ createDialog
     public Dialog createDialog(@LayoutRes int layoutResID, boolean cancel) {
-
-        Dialog dialog;
-        dialog = new Dialog(getContext());
-        dialog.setCancelable(cancel);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(layoutResID);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        Window window = dialog.getWindow();
-        lp.copyFrom(window.getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-        return dialog;
+        return new DialogManager().createDialog(getContext(), layoutResID, cancel);
     }
     //______________________________________________________________________________________________ createDialog
 
@@ -356,60 +273,19 @@ public class FR_Primary extends Fragment implements FragmentAction{
     //______________________________________________________________________________________________ stopLoadingView
 
 
-
-/*
-    //______________________________________________________________________________________________ setViewLoadings
-    public void setViewLoadings(View view, int layout) {
-
-        if (md_viewLoadings == null)
-            md_viewLoadings = new ArrayList<>();
-
-        ViewSkeletonScreen loading = Skeleton.bind(view)
-                .shimmer(true)
-                .color(R.color.dayRecyclerLoading)
-                .angle(0)
-                .load(layout)
-                .duration(2200)
-                .show();
-
-        md_viewLoadings.add(new MD_ViewLoading(loading, view));
-
-    }
-    //______________________________________________________________________________________________ setViewLoadings
-*/
-
-
-
-
-/*
-    //______________________________________________________________________________________________ stopLoadingView
-    public void stopLoadingViews(View view) {
-
-        if (md_viewLoadings == null)
+    //______________________________________________________________________________________________ exitByDoubleClick
+    public void exitByDoubleClick() {
+        if (getContext() == null)
+            return;
+        if (getView() == null)
             return;
 
-        for (MD_ViewLoading md_viewLoading : md_viewLoadings)
-            if (md_viewLoading.getView() == view)
-                if (md_viewLoading.getViewSkeletonScreen() != null) {
-                    md_viewLoading.getViewSkeletonScreen().hide();
-                    md_viewLoading.setViewSkeletonScreen(null);
-                }
-    }
-    //______________________________________________________________________________________________ stopLoadingView
-*/
-
-
-
-
-
-    //______________________________________________________________________________________________ exitByDoubleclick
-    public void exitByDoubleclick(LinearLayout linearLayout) {
         if (doubleExitApplication)
             System.exit(1);
         else {
             getView().setAlpha(0.1f);
             doubleExitApplication = true;
-            showToast(linearLayout, getResources().getString(R.string.doubleExit), getResources().getDrawable(R.drawable.ic_error), getResources().getColor(R.color.white));
+            showToast(getResources().getString(R.string.doubleExit), ResourcesCompat.getDrawable(getResources(), R.drawable.toast_logout, getContext().getTheme()), ResourcesCompat.getColor(getResources(),R.color.white, requireContext().getTheme()));
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 doubleExitApplication = false;
@@ -417,7 +293,7 @@ public class FR_Primary extends Fragment implements FragmentAction{
             }, 4000);
         }
     }
-    //______________________________________________________________________________________________ exitByDoubleclick
+    //______________________________________________________________________________________________ exitByDoubleClick
 
 
     //______________________________________________________________________________________________ gotoFirstFragment
@@ -437,9 +313,11 @@ public class FR_Primary extends Fragment implements FragmentAction{
     //______________________________________________________________________________________________ gotoUrl
 
 
-/*
     //______________________________________________________________________________________________ chooseDate
-    public void chooseDate(ML_TextView ml_textView, String title, String initDate) {
+    public void chooseDate(MLTextView ml_textView, String title, String init) {
+
+        if (getContext() == null)
+            return;
 
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = ml_textView.getContext().getTheme();
@@ -451,12 +329,14 @@ public class FR_Primary extends Fragment implements FragmentAction{
         theme.resolveAttribute(R.attr.pdp_picker, typedValue, true);
         picker = typedValue.data;
 
-        ML_PersianPickerDialog persianCalendar = new ML_PersianPickerDialog(getContext())
+        SolarDateModel initDate = getPersianCalendar(init);
+
+        PersianDatePickerDialog persianCalendar = new PersianDatePickerDialog(getContext())
                 .setPositiveButtonString(getContext().getString(R.string.chooseDate))
                 .setNegativeButton(getContext().getString(R.string.cancel))
                 .setTodayButton(getContext().getString(R.string.todayDate))
                 .setTodayButtonVisible(true)
-                .setInitDate(getPersianCalendar(initDate))
+                .setInitDate(initDate.getYear(), initDate.getMonth(), initDate.getDay())
                 .setMaxYear(-1)
                 .setMinYear(1300)
                 .setActionTextColor(text)
@@ -464,19 +344,17 @@ public class FR_Primary extends Fragment implements FragmentAction{
                 .setPickerBackgroundColor(picker)
                 .setBackgroundColor(back);
 
-
-        persianCalendar.setListener(new Listener() {
+        persianCalendar.setListener(new PersianPickerListener() {
             @Override
-            public void onDateSelected(PersianCalendar persianCalendar) {
+            public void onDateSelected(PersianPickerDate persianPickerDate) {
                 StringBuilder sb = new StringBuilder();
-                sb.append(persianCalendar.getPersianYear());
+                sb.append(persianPickerDate.getPersianYear());
                 sb.append("/");
-                sb.append(String.format("%02d", persianCalendar.getPersianMonth()));
+                sb.append(String.format(Locale.getDefault(),"%02d", persianPickerDate.getPersianMonth()));
                 sb.append("/");
-                sb.append(String.format("%02d", persianCalendar.getPersianDay()));
+                sb.append(String.format(Locale.getDefault(),"%02d", persianPickerDate.getPersianDay()));
                 String chooseDate = sb.toString();
                 ml_textView.setAdditionalValue(chooseDate);
-                sb = null;
                 sb = new StringBuilder();
                 sb.append(title);
                 sb.append(System.getProperty("line.separator"));
@@ -493,104 +371,34 @@ public class FR_Primary extends Fragment implements FragmentAction{
 
     }
     //______________________________________________________________________________________________ chooseDate
-*/
 
 
     //______________________________________________________________________________________________ getPersianCalendar
-    private PersianCalendar getPersianCalendar(String init) {
+    private SolarDateModel getPersianCalendar(String init) {
 
-        PersianCalendar initDate = null;
-
-/*        if (init == null) {
-            SolarDateModel _solarDateModel = getUtility().gregorianToSolarDate(new Date());
-            initDate = new PersianCalendar();
-            initDate.setPersianDate(_solarDateModel.getIntYear(), _solarDateModel.getIntMonth(), _solarDateModel.getIntDay());
+        SolarDateModel solarDateModel;
+        if (init == null) {
+            Converter converter = new Converter();
+            solarDateModel = converter.GregorianDateToSolarDate(LocalDateTime.now());
         } else {
-            initDate = new PersianCalendar();
-            initDate.setPersianDate(Integer.valueOf(init.substring(0, 4)).intValue(), Integer.valueOf(init.substring(5, 7)).intValue(), Integer.valueOf(init.substring(8, 10)).intValue());
-        }*/
-        return initDate;
+            solarDateModel = new SolarDateModel(Integer.parseInt(init.substring(0, 4)), Integer.parseInt(init.substring(5, 7)), Integer.parseInt(init.substring(8, 10)), DayOfWeek.FRIDAY);
+        }
+
+        return solarDateModel;
     }
     //______________________________________________________________________________________________ getPersianCalendar
 
-
-    //______________________________________________________________________________________________ dateGenerate
-    public String dateGenerate(String date, String time) {
-
-/*        if (date == null || time == null)
-            return "";
-
-        if (date.isEmpty() || time.isEmpty())
-            return "";
-        Converter converter = new Converter();
-        date = converter.PersianNumberToEnglishNumber(date);
-        time = converter.PersianNumberToEnglishNumber(time);
-
-        GregorianDateModel gregorianDate = getUtility().solarDateToGregorian(date);
-        String result = gregorianDate.getDateString("-");
-        result = result + "T" + time;
-        return result;*/
-        return "";
-    }
-    //______________________________________________________________________________________________ dateGenerate
-
-
-/*
-    //______________________________________________________________________________________________ getFragmentActions
-    public FR_Primary.fragmentActions getFragmentActions() {
-        return fragmentActions;
-    }
-    //______________________________________________________________________________________________ getFragmentActions
-*/
 
 
     //______________________________________________________________________________________________ checkAndAuthenticate
     public void checkAndAuthenticate(int biometricAction) {
 
-        this.biometricAction = biometricAction;
-        KeyguardManager keyguardManager = (KeyguardManager) getContext().getSystemService(Context.KEYGUARD_SERVICE);
-        boolean isSecure = keyguardManager.isKeyguardSecure();
-
-        if (isSecure) {
-            Intent intent = keyguardManager.createConfirmDeviceCredentialIntent("رمز ورود به گوشی را وارد نمایید", "از وارد کردن رمز مجازی لند خودداری نمایید");
-            FR_Primary.this.startActivityForResult(intent, RESULT_ENABLE);
-        } else {
-            bioMetric(biometricAction);
-        }
+        if (getActivity() == null)
+            return;
+        MasterActivity.fragmentAction = this;
+        new BiometricManager().checkBiometric(getActivity(), this, biometricAction);
     }
     //______________________________________________________________________________________________ checkAndAuthenticate
-
-
-    //______________________________________________________________________________________________ onActivityResult
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case RESULT_ENABLE:
-                if (resultCode == RESULT_OK)
-                    bioMetric(biometricAction);
-                else
-                    bioMetricFailed(biometricAction);
-                break;
-        }
-    }
-    //______________________________________________________________________________________________ onActivityResult
-
-
-    //______________________________________________________________________________________________ blurryTextView
-    public void blurryTextView(TextView view) {
-
-        view.setText("0000000000");
-        if (Build.VERSION.SDK_INT >= 11) {
-            view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
-        float radius = view.getTextSize() / 3;
-        BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.NORMAL);
-        view.getPaint().setMaskFilter(filter);
-
-    }
-    //______________________________________________________________________________________________ blurryTextView
 
 
 
