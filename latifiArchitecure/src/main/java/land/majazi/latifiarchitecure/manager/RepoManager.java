@@ -21,6 +21,19 @@ public class RepoManager {
     //______________________________________________________________________________________________ RepoManager
 
 
+    //______________________________________________________________________________________________ validationError
+    public MutableLiveData<ResponseModel> validationError() {
+        ResponseModel responseModel = new ResponseModel();
+        responseModel.setError(true);
+        responseModel.setResponseCode(2);
+        responseModel.setMessage(getActivity().getResources().getString(R.string.validationError));
+        MutableLiveData<ResponseModel> liveData = new MutableLiveData<>();
+        liveData.setValue(responseModel);
+        return liveData;
+    }
+    //______________________________________________________________________________________________ validationError
+
+
 
     //______________________________________________________________________________________________ unAuthorization
     public MutableLiveData<ResponseModel> unAuthorization() {
