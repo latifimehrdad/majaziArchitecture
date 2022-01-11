@@ -119,7 +119,6 @@ public class RecordVideo extends AppCompatActivity {
         refreshRecord();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            imageViewSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_rear_white_24dp));
             lensFacing = LensFacing.FRONT;
             initCamera();
         }, 500);
@@ -132,7 +131,6 @@ public class RecordVideo extends AppCompatActivity {
         refreshRecord();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            imageViewSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_front_white_24dp));
             lensFacing = LensFacing.BACK;
             initCamera();
         }, 500);

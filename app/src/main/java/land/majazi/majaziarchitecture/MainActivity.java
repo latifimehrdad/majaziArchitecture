@@ -16,7 +16,4 @@ public class MainActivity extends MasterActivity {
 
     }
 
-    private void p(String message) {
-        Log.i("meri", message);
-    }
 }

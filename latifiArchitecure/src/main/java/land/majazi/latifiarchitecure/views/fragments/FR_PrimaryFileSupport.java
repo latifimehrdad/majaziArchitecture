@@ -76,8 +76,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         startActivityForResult(cameraIntent, REQUEST_CHOOSE_PICTURE);
         if (chooseImageDialog != null) {
             chooseImageDialog.dismiss();
-            chooseImageDialog = null;
-        }
+            chooseImageDialog = null; }
     }
     //______________________________________________________________________________________________ chooseImageFromGallery
 
@@ -94,7 +93,6 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         intent.putExtra("INTENT_NAME_VIDEO_PATH", fileFromCamera.getPath());
         intent.putExtra("INTENT_NAME_VIDEO_TEXT", message);
         startActivityForResult(intent, REQUEST_TAKE_VIDEO);
-
     }
     //______________________________________________________________________________________________ takeVideo
 

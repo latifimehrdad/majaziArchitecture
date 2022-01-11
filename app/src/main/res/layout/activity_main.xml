@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,30 +8,5 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
-    <fragment
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        android:padding="@dimen/_4sdp"
-        app:navGraph="@navigation/nav_host" />
-
-
-    <land.majazi.latifiarchitecure.views.customs.alert.MLToast
-        android:id="@+id/ml_Toast"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:toast_Back="@drawable/dw_toast_main_layout"
-        app:toast_minWidth="@dimen/_80sdp"
-        app:toast_maxWidth="@dimen/_160sdp"
-        app:toast_TextColor="@color/white"
-        app:toast_TextSize="@dimen/_10sdp"
-        app:fontFamily="@font/vazir_normal"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
