@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.manager.KeyBoardManager;
-import land.majazi.latifiarchitecure.manager.ResponseModelManager;
 import land.majazi.latifiarchitecure.models.ResponseModel;
 import retrofit2.Call;
 import retrofit2.Callback;
