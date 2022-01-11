@@ -11,13 +11,23 @@ import retrofit2.Response;
 
 public class RepoManager {
 
+    private final Activity activity;
+
+
+    //______________________________________________________________________________________________ RepoManager
+    public RepoManager(Activity activity) {
+        this.activity = activity;
+    }
+    //______________________________________________________________________________________________ RepoManager
+
+
 
     //______________________________________________________________________________________________ unAuthorization
-    public MutableLiveData<ResponseModel> unAuthorization(Context context) {
+    public MutableLiveData<ResponseModel> unAuthorization() {
         ResponseModel responseModel = new ResponseModel();
         responseModel.setError(true);
         responseModel.setResponseCode(401);
-        responseModel.setMessage(context.getResources().getString(R.string.unAuthorization));
+        responseModel.setMessage(getActivity().getResources().getString(R.string.unAuthorization));
         MutableLiveData<ResponseModel> liveData = new MutableLiveData<>();
         liveData.setValue(responseModel);
         return liveData;
@@ -26,24 +36,24 @@ public class RepoManager {
 
 
     //______________________________________________________________________________________________ callRequest
-    public MutableLiveData<ResponseModel> callRequest(Context context, Call primaryCall, Activity activityForHideKeyboard, boolean isLoginRequest) {
+    public MutableLiveData<ResponseModel> callRequest(Call primaryCall, boolean hideKeyboard, boolean isLoginRequest) {
 
         final MutableLiveData<ResponseModel> mutableLiveData = new MutableLiveData<>();
 
-        if (activityForHideKeyboard != null) {
+        if (hideKeyboard) {
             KeyBoardManager keyBoardManager = new KeyBoardManager();
-            keyBoardManager.hide(activityForHideKeyboard);
+            keyBoardManager.hide(getActivity());
         }
 
         primaryCall.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                mutableLiveData.setValue(new ResponseModelManager().getResponse(context, response, isLoginRequest));
+                mutableLiveData.setValue(new ResponseModelManager().getResponse(getActivity(), response, isLoginRequest));
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                mutableLiveData.setValue(new ResponseModelManager().getResponse(context, null, isLoginRequest));
+                mutableLiveData.setValue(new ResponseModelManager().getResponse(getActivity(), null, isLoginRequest));
             }
         });
 
@@ -51,5 +61,11 @@ public class RepoManager {
     }
     //______________________________________________________________________________________________ callRequest
 
+
+    //______________________________________________________________________________________________ getActivity
+    public Activity getActivity() {
+        return activity;
+    }
+    //______________________________________________________________________________________________ getActivity
 
 }
