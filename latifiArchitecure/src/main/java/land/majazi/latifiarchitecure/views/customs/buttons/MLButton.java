@@ -177,8 +177,9 @@ public class MLButton extends LinearLayout {
                 textView.setText(waitText);
             }
         }
-
-        gifImageView.setImageDrawable(ta.getDrawable(R.styleable.MLButton_gifLoading));
+        int gif = ta.getResourceId(R.styleable.MLButton_gifLoading, 0);
+        if (gif != 0)
+            gifImageView.setImageResource(gif);
 
     }
     //______________________________________________________________________________________________ startLoading
@@ -206,7 +207,6 @@ public class MLButton extends LinearLayout {
         return click;
     }
     //______________________________________________________________________________________________ isClick
-
 
 
     //______________________________________________________________________________________________ setTextAndTintDefaultColor
@@ -288,7 +288,6 @@ public class MLButton extends LinearLayout {
         mlButton.gifImageView.setImageDrawable(icon);
     }
     //______________________________________________________________________________________________ setIcon
-
 
 
 }
