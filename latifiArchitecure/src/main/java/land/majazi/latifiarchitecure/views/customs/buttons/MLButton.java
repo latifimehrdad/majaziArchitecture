@@ -274,4 +274,21 @@ public class MLButton extends LinearLayout {
     //______________________________________________________________________________________________ getTextView
 
 
+    //______________________________________________________________________________________________ setNormalBack
+    @BindingAdapter("normalBack")
+    public static void setNormalBack(MLButton mlButton, Drawable normalBack) {
+        mlButton.setBackground(normalBack);
+    }
+    //______________________________________________________________________________________________ setNormalBack
+
+
+    //______________________________________________________________________________________________ setIcon
+    @BindingAdapter("icon")
+    public static void setIcon(MLButton mlButton, Drawable icon) {
+        mlButton.gifImageView.setImageDrawable(icon);
+    }
+    //______________________________________________________________________________________________ setIcon
+
+
+
 }
