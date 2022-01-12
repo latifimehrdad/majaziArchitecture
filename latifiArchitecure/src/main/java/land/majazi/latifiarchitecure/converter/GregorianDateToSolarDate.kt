@@ -15,7 +15,7 @@ class GregorianDateToSolarDate(private val gregorianDate: LocalDateTime) {
 
         val gregorianYear = gregorianDate.year
         val gregorianMonth = gregorianDate.monthValue
-        val gregorianDay = gregorianDate.dayOfYear
+        val gregorianDay = gregorianDate.dayOfMonth
         val dayOfWeek = gregorianDate.dayOfWeek
 
         var buf1 = arrayOf(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
