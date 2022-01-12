@@ -121,10 +121,10 @@ public class ImageCrop {
 
 
     //______________________________________________________________________________________________ saveBitmap
-    public void saveBitmap(Bitmap bitmap, String appName) {
+    public void saveBitmap(Bitmap bitmap) {
         FileManager fileManager = new FileManager();
         CropImageView mCropView = new CropImageView(context);
-        mCropView.save(bitmap).execute(fileManager.createSaveUri(context, appName), mSaveCallback);
+        mCropView.save(bitmap).execute(fileManager.createSaveUri(context, applicationName), mSaveCallback);
     }
     //______________________________________________________________________________________________ saveBitmap
 

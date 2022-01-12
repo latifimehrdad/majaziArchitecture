@@ -4,6 +4,9 @@ import java.time.DayOfWeek
 
 class SolarDateModel(private val year: Int,private val month: Int,private val day: Int, private  val dayOfWeek: DayOfWeek) {
 
+    fun getSolarDate(): String {
+        return "${getYearString()}/${getMonthString()}/${getDayString()}"
+    }
 
     fun getFullDate() : String {
         return getDayOfWeekTitle() + " " + getDayString() + " " + getMonthTitle() + " " + getYearString()
