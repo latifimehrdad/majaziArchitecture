@@ -69,8 +69,8 @@ class GregorianDateToSolarDate(private val gregorianDate: LocalDateTime) {
                 }
                 solarYear = gregorianYear - 622
             }
-
-        } else {
+        }
+        else {
             solarDay = buf2[gregorianMonth - 1] + gregorianDay
             ld = if (gregorianYear >= 1996)
                 79
@@ -104,7 +104,8 @@ class GregorianDateToSolarDate(private val gregorianDate: LocalDateTime) {
                     }
                     solarYear = gregorianYear - 621
                 }
-            } else {
+            }
+            else {
                 solarDay += 10
                 when (solarDay % 30) {
                     0 -> {
@@ -116,9 +117,11 @@ class GregorianDateToSolarDate(private val gregorianDate: LocalDateTime) {
                         solarDay %= 30
                     }
                 }
+                solarYear = gregorianYear - 622
             }
-            solarYear = gregorianYear - 622
+
         }
+
         return SolarDateModel(solarYear, solarMonth, solarDay, dayOfWeek);
     }
     //______________________________________________________________________________________________ convert
