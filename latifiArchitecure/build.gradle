@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'androidx.navigation.safeargs'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 android {
@@ -9,8 +10,8 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 31
-        versionCode 45
-        versionName "2.4.5"
+        versionCode 46
+        versionName "2.4.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -84,4 +85,17 @@ dependencies {
     api 'com.github.GwonHyeok:StickySwitch:0.0.16'
     api 'com.github.smarteist:autoimageslider:1.4.0'
 
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.Vipinbalakrishnan'
+                artifactId = 'ribbonlayout'
+                version = '1.1'
+            }
+        }
+    }
 }
