@@ -1,3 +1,5 @@
 rootProject.name = "majaziArchitecture"
 include ':app'
 include ':latifiArchitecure'
+include ':Library'
+
