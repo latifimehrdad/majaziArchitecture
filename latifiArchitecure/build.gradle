@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 31
-        versionCode 39
-        versionName "2.3.9"
+        versionCode 40
+        versionName "2.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -26,8 +26,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
 
     kotlinOptions {
