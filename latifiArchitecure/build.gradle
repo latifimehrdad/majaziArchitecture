@@ -60,7 +60,7 @@ dependencies {
     api "androidx.navigation:navigation-ui:$nav_version"
 
 
-    api 'com.intuit.sdp:sdp-android:1.0.5'
+    api 'com.intuit.sdp:sdp-android:1.0.6'
 
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
 
