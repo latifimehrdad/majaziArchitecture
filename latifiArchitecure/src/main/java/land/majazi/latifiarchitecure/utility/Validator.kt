@@ -83,11 +83,11 @@ class Validator {
         if (shaba.isNullOrEmpty())
             return false;
 
-        if (shaba.length != 26)
+        if (shaba.length != 24)
             return false
 
-        var place1 = shaba.subSequence(0,4).toString()
-        var place2 = shaba.subSequence(4, 26).toString()
+        var place1 = "IR" + shaba.subSequence(0,2).toString()
+        var place2 = shaba.subSequence(2, 24).toString()
         place1 = place1.replace("IR","1827", true)
         place2+=place1
         var big = place2.toBigInteger()
