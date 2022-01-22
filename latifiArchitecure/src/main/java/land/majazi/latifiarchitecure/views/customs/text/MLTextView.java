@@ -210,7 +210,7 @@ public class MLTextView extends LinearLayout {
 
 
     //______________________________________________________________________________________________ setIcon
-    private void setIcon(Drawable icon, int iconTint) {
+    public void setIcon(Drawable icon, int iconTint) {
         imageIcon.setImageDrawable(icon);
         imageIcon.setColorFilter(iconTint);
     }
