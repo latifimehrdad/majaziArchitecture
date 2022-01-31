@@ -1,10 +1,26 @@
 package land.majazi.latifiarchitecure.manager;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
 import java.util.Locale;
 
 public class DeviceManager {
+
+    //______________________________________________________________________________________________ getAppVersionCode
+    public int getAppVersionCode(Context context) {
+        PackageInfo pInfo;
+        try {
+            pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException ignored) {
+            return 0;
+        }
+    }
+    //______________________________________________________________________________________________ getAppVersionCode
+
 
     //______________________________________________________________________________________________ getAndroidVersion
     public String getAndroidVersion() {
