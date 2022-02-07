@@ -25,8 +25,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
-
-import butterknife.ButterKnife;
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
@@ -51,10 +49,11 @@ public class FR_Primary extends Fragment implements FragmentAction{
 
     private static String fragmentName;
     public static int firstFragmentAction = 0;
+    private NavController navController;
 
     private OnBackPressedCallback pressedCallback;
     private View view;
-    private NavController navController;
+
     private RecyclerViewSkeletonScreen skeletonScreen;
     private ViewSkeletonScreen viewSkeletonScreen;
 
@@ -101,7 +100,6 @@ public class FR_Primary extends Fragment implements FragmentAction{
     //______________________________________________________________________________________________ setView
     public void setView(View view) {
         this.view = view;
-        ButterKnife.bind(this, view);
         fragmentName = this.getClass().toString();
         init();
         clickPressed();

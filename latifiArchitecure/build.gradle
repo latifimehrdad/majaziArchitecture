@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 31
-        versionCode 65
-        versionName "2.6.5"
+        versionCode 66
+        versionName "2.6.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -45,9 +45,6 @@ dependencies {
 
     api 'com.android.support:multidex:1.0.3'
 
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-
     implementation 'androidx.core:core-ktx:1.7.0'
 
     api 'com.squareup.okhttp3:logging-interceptor:3.7.0'
@@ -57,10 +54,9 @@ dependencies {
     api 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
 
-    def nav_version = "2.3.5"
-    api "androidx.navigation:navigation-fragment:$nav_version"
-    api "androidx.navigation:navigation-ui:$nav_version"
-
+    def nav_version = "2.4.0"
+    api "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    api "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     api 'com.intuit.sdp:sdp-android:1.0.6'
 
