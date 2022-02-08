@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
@@ -40,7 +41,7 @@ public class RecordVideo extends AppCompatActivity {
     Runnable runnableTime;
     String filePath;
     boolean recording;
-    int seconds = 10;
+    int seconds = 20;
     int time;
     String text;
 
@@ -67,7 +68,7 @@ public class RecordVideo extends AppCompatActivity {
         imageViewRetry = findViewById(R.id.imageViewRetry);
         textViewTime = findViewById(R.id.textViewTime);
         textViewText = findViewById(R.id.textViewText);
-        imageViewRecord.setImageDrawable(getResources().getDrawable(R.drawable.dw_back_video_record));
+        imageViewRecord.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dw_back_video_record, getTheme()));
         imageViewRecord.setOnClickListener(v -> recordClick());
         imageViewSwitch.setOnClickListener(v -> switchCamera());
         imageViewOk.setOnClickListener(v -> endRecording());
@@ -153,7 +154,7 @@ public class RecordVideo extends AppCompatActivity {
     private void startRecord() {
         recording = true;
         cameraRecorder.start(filePath);
-        imageViewRecord.setImageDrawable(getResources().getDrawable(R.drawable.dw_back_video_record_stop));
+        imageViewRecord.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dw_back_video_record_stop, getTheme()));
         imageViewSwitch.setVisibility(View.INVISIBLE);
         linearLayoutFinish.setVisibility(View.INVISIBLE);
         startTimeElapse();
@@ -165,7 +166,7 @@ public class RecordVideo extends AppCompatActivity {
     private void stopRecord() {
         recording = false;
         cameraRecorder.stop();
-        imageViewRecord.setImageDrawable(getResources().getDrawable(R.drawable.dw_back_video_record));
+        imageViewRecord.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dw_back_video_record, getTheme()));
         imageViewSwitch.setVisibility(View.INVISIBLE);
         imageViewRecord.setVisibility(View.INVISIBLE);
         linearLayoutFinish.setVisibility(View.VISIBLE);
@@ -190,12 +191,7 @@ public class RecordVideo extends AppCompatActivity {
             video_preview.setVideoPath(filePath);
             video_preview.setKeepScreenOn(true);
             video_preview.setMediaController(new MediaController(this));
-            video_preview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                }
-            });
+            video_preview.setOnCompletionListener(mp -> { });
             video_preview.setVisibility(View.VISIBLE);
             video_preview.start();
         }, 500);
@@ -222,7 +218,7 @@ public class RecordVideo extends AppCompatActivity {
                 handlerTime = null;
                 runnableTime = null;
 
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         });
