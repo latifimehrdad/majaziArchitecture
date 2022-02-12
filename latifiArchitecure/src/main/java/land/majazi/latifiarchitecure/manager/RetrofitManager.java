@@ -6,10 +6,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import land.majazi.latifiarchitecure.enums.IPvMode;
 import okhttp3.Cache;
-import okhttp3.Dns;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,7 +46,6 @@ public class RetrofitManager {
                 .cache(cache)
                 .addNetworkInterceptor(loggingInterceptor)
                 .addInterceptor(interceptor)
-                .dns(new DnsSelector(IPvMode.IPV4_FIRST, Dns.SYSTEM))
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20,TimeUnit.SECONDS)
                 .writeTimeout(3,TimeUnit.MINUTES)
