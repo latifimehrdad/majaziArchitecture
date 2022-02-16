@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+
 import androidx.core.content.FileProvider;
 
 import com.isseiaoki.simplecropview.util.Logger;
@@ -88,7 +89,6 @@ public class FileManager {
     //______________________________________________________________________________________________ getUriFromFile
 
 
-
     //______________________________________________________________________________________________ getOutputMediaFileUri
     public Uri getOutputMediaFileUri(Activity activity, String appName, int type) {
 
@@ -108,7 +108,6 @@ public class FileManager {
         }
     }
     //______________________________________________________________________________________________ getOutputMediaFileUri
-
 
 
     //______________________________________________________________________________________________ getOutputMediaDirUri
@@ -144,9 +143,6 @@ public class FileManager {
             case MEDIA_TYPE_VIDEO:
                 mediaFile = new File(getAppMediaFolder(MEDIA_TYPE_VIDEO, appName) + File.separator + "Video_" + timeStamp + ".mp4");
                 break;
-            case MEDIA_TYPE_DOCUMENT:
-                mediaFile = new File(getAppMediaFolder(MEDIA_TYPE_DOCUMENT, appName) + File.separator + "Document_" + timeStamp);
-                break;
             case MEDIA_TYPE_NONE:
                 mediaFile = new File(getAppMediaFolder(MEDIA_TYPE_NONE, appName) + File.separator + "Download_" + timeStamp + ".apk");
                 break;
@@ -158,6 +154,21 @@ public class FileManager {
         return mediaFile;
     }
     //______________________________________________________________________________________________ getOutputMediaFile
+
+
+    //______________________________________________________________________________________________ getOutputDOCUMENTFile
+    public File getOutputDOCUMENTFile(String appName, String fileName) {
+
+        String timeStamp = getNewFileName();
+        File mediaFile;
+        if (fileName == null || fileName.isEmpty())
+            mediaFile = new File(getAppMediaFolder(MEDIA_TYPE_DOCUMENT, appName) + File.separator + "Document_" + timeStamp);
+        else
+            mediaFile = new File(getAppMediaFolder(MEDIA_TYPE_DOCUMENT, appName) + File.separator + fileName);
+
+        return mediaFile;
+    }
+    //______________________________________________________________________________________________ getOutputDOCUMENTFile
 
 
     //______________________________________________________________________________________________ getAppMediaFolder
@@ -251,7 +262,6 @@ public class FileManager {
     //______________________________________________________________________________________________ getPathVideo
 
 
-
     //______________________________________________________________________________________________ getPathDownload
     public String getPathDownload(Context context, Uri uri, String appName) {
         ContentResolver contentResolver = context.getContentResolver();
@@ -265,7 +275,6 @@ public class FileManager {
         return path;
     }
     //______________________________________________________________________________________________ getPathDownload
-
 
 
     //______________________________________________________________________________________________ getMimeType
@@ -354,11 +363,11 @@ public class FileManager {
                         uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                     }
                     selection = "_id=?";
-                    selectionArgs = new String[]{ split[1] };
+                    selectionArgs = new String[]{split[1]};
                 }
             }
             if ("content".equalsIgnoreCase(uri.getScheme())) {
-                String[] projection = { MediaStore.Images.Media.DATA };
+                String[] projection = {MediaStore.Images.Media.DATA};
                 Cursor cursor = null;
                 try {
                     cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
