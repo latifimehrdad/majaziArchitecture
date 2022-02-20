@@ -41,7 +41,7 @@ public class RecordVideo extends AppCompatActivity {
     Runnable runnableTime;
     String filePath;
     boolean recording;
-    int seconds = 20;
+    int seconds = 40;
     int time;
     String text;
 
