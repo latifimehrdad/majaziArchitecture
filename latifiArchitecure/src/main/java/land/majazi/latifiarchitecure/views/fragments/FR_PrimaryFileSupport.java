@@ -82,7 +82,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
 
 
     //______________________________________________________________________________________________ takeVideo
-    public void takeVideo(String message, String appName) {
+    public void takeVideo(String message, String appName, int second) {
         if (getActivity() == null)
             return;
         applicationName = appName;
@@ -92,6 +92,7 @@ public class FR_PrimaryFileSupport extends FR_Primary {
         Intent intent = new Intent(getContext(), RecordVideo.class);
         intent.putExtra("INTENT_NAME_VIDEO_PATH", fileFromCamera.getPath());
         intent.putExtra("INTENT_NAME_VIDEO_TEXT", message);
+        intent.putExtra("second", second);
         startActivityForResult(intent, REQUEST_TAKE_VIDEO);
     }
     //______________________________________________________________________________________________ takeVideo

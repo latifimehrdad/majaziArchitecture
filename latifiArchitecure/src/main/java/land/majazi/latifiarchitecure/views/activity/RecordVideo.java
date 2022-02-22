@@ -1,7 +1,6 @@
 package land.majazi.latifiarchitecure.views.activity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -41,7 +40,7 @@ public class RecordVideo extends AppCompatActivity {
     Runnable runnableTime;
     String filePath;
     boolean recording;
-    int seconds = 40;
+    int seconds = 25;
     int time;
     String text;
 
@@ -50,6 +49,8 @@ public class RecordVideo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record_video);
+        if (getIntent().getExtras() != null)
+            seconds = getIntent().getIntExtra("second", 25);
         video_preview = (VideoView) findViewById(R.id.vv_playback);
     }
     //______________________________________________________________________________________________ onCreate
