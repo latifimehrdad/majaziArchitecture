@@ -19,6 +19,7 @@ class PersianNumberToEnglishNumber(private val number: String) {
                 '۷' -> stringNumber+= "7"
                 '۸' -> stringNumber+= "8"
                 '۹' -> stringNumber+= "9"
+                '٫' -> stringNumber+= "."
                 else -> stringNumber+= c
             }
         return stringNumber
