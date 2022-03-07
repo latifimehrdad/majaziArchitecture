@@ -30,6 +30,7 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.converter.Converter;
+import land.majazi.latifiarchitecure.enums.EnumUnAuthorization;
 import land.majazi.latifiarchitecure.manager.BiometricManager;
 import land.majazi.latifiarchitecure.manager.DialogManager;
 import land.majazi.latifiarchitecure.manager.KeyBoardManager;
@@ -111,8 +112,10 @@ public class FR_Primary extends Fragment implements FragmentAction{
     public void checkErrorRequest(ResponseModel responseModel) {
         switch (responseModel.getResponseCode()) {
             case 401:
+                this.unAuthorization(responseModel.getMessage(), EnumUnAuthorization.TokenExpire);
+                break;
             case 403:
-                this.unAuthorization(responseModel.getMessage());
+                this.unAuthorization(responseModel.getMessage(), EnumUnAuthorization.Inaccessibility);
                 break;
             default:
                 this.actionWhenFailureRequest(responseModel.getMessage());

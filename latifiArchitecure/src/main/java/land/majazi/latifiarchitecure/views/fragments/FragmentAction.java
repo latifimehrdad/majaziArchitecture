@@ -2,7 +2,10 @@ package land.majazi.latifiarchitecure.views.fragments;
 
 import android.net.Uri;
 
+import land.majazi.latifiarchitecure.enums.EnumUnAuthorization;
+
 public interface FragmentAction {
+
     default void actionWhenFailureRequest(String error) { }
 
     default void backButtonPressed() {}
@@ -15,7 +18,7 @@ public interface FragmentAction {
 
     default void cropImage(Uri uri){}
 
-    default void unAuthorization(String error){}
+    default void unAuthorization(String error, EnumUnAuthorization enumUnAuthorization){}
 
     default void startView(){}
 

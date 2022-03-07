@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 31
-        versionCode 74
-        versionName "2.7.4"
+        versionCode 75
+        versionName "2.7.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -47,14 +47,13 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
 
-    api 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+    api 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
     api 'com.google.code.gson:gson:2.8.6'
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
-
-    def nav_version = "2.4.0"
+    def nav_version = "2.4.1"
     api "androidx.navigation:navigation-fragment-ktx:$nav_version"
     api "androidx.navigation:navigation-ui-ktx:$nav_version"
 
