@@ -1,7 +1,7 @@
 package land.majazi.latifiarchitecure.manager;
 
 import android.app.Activity;
-import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import land.majazi.latifiarchitecure.R;
 import land.majazi.latifiarchitecure.models.ResponseModel;
@@ -40,7 +40,7 @@ public class RepoManager {
         ResponseModel responseModel = new ResponseModel();
         responseModel.setError(true);
         responseModel.setResponseCode(401);
-        responseModel.setMessage(getActivity().getResources().getString(R.string.unAuthorization));
+        responseModel.setMessage(getActivity().getResources().getString(R.string.unAuthorizationTokenExpire));
         MutableLiveData<ResponseModel> liveData = new MutableLiveData<>();
         liveData.setValue(responseModel);
         return liveData;

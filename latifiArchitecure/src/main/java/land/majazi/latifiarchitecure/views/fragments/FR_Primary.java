@@ -115,7 +115,7 @@ public class FR_Primary extends Fragment implements FragmentAction{
                 this.unAuthorization(responseModel.getMessage(), EnumUnAuthorization.TokenExpire);
                 break;
             case 403:
-                this.unAuthorization(responseModel.getMessage(), EnumUnAuthorization.Inaccessibility);
+                this.unAuthorization(getString(R.string.unAuthorization), EnumUnAuthorization.Inaccessibility);
                 break;
             default:
                 this.actionWhenFailureRequest(responseModel.getMessage());
