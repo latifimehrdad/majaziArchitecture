@@ -40,7 +40,7 @@ public class RepoManager {
         ResponseModel responseModel = new ResponseModel();
         responseModel.setError(true);
         responseModel.setResponseCode(401);
-        responseModel.setMessage(getActivity().getResources().getString(R.string.unAuthorizationTokenExpire));
+        responseModel.setMessage(getActivity().getResources().getString(R.string.unAuthorization));
         MutableLiveData<ResponseModel> liveData = new MutableLiveData<>();
         liveData.setValue(responseModel);
         return liveData;
