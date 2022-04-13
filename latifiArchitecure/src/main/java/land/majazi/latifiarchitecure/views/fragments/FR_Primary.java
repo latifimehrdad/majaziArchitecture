@@ -14,6 +14,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -77,6 +79,18 @@ public class FR_Primary extends Fragment implements FragmentAction{
     //______________________________________________________________________________________________ onCreate
 
 
+
+    //______________________________________________________________________________________________ onViewCreated
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init();
+        clickPressed();
+    }
+    //______________________________________________________________________________________________ onViewCreated
+
+
+
     //______________________________________________________________________________________________ onStart
     @Override
     public void onStart() {
@@ -102,8 +116,6 @@ public class FR_Primary extends Fragment implements FragmentAction{
     public void setView(View view) {
         this.view = view;
         fragmentName = this.getClass().toString();
-        init();
-        clickPressed();
     }
     //______________________________________________________________________________________________ setView
 

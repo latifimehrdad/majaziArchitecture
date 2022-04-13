@@ -8,5 +8,4 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
