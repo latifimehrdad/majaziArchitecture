@@ -14,6 +14,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -51,22 +53,17 @@ public class FR_Primary extends Fragment implements FragmentAction{
     private static String fragmentName;
     public static int firstFragmentAction = 0;
     private NavController navController;
-
     private OnBackPressedCallback pressedCallback;
-    private View view;
-
     private RecyclerViewSkeletonScreen skeletonScreen;
     private ViewSkeletonScreen viewSkeletonScreen;
-
-
     private boolean doubleExitApplication = false;
-
 
 
     //______________________________________________________________________________________________ onCreate
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentName = this.getClass().toString();
         pressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -77,35 +74,32 @@ public class FR_Primary extends Fragment implements FragmentAction{
     //______________________________________________________________________________________________ onCreate
 
 
-    //______________________________________________________________________________________________ onStart
+
+    //______________________________________________________________________________________________ onViewCreated
     @Override
-    public void onStart() {
-        super.onStart();
-        if (getView() == null)
-            return;
-        navController = Navigation.findNavController(getView());
-        startView();
-    }
-    //______________________________________________________________________________________________ onStart
-
-
-
-    //______________________________________________________________________________________________ getView
-    @Override
-    public View getView() {
-        return view;
-    }
-    //______________________________________________________________________________________________ getView
-
-
-    //______________________________________________________________________________________________ setView
-    public void setView(View view) {
-        this.view = view;
-        fragmentName = this.getClass().toString();
-        init();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+        init(view);
         clickPressed();
+        onViewCreated();
     }
-    //______________________________________________________________________________________________ setView
+    //______________________________________________________________________________________________ onViewCreated
+
+
+
+    //______________________________________________________________________________________________ onDestroy
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentName = null;
+        navController = null;
+        pressedCallback = null;
+        skeletonScreen = null;
+        viewSkeletonScreen = null;
+    }
+    //______________________________________________________________________________________________ onDestroy
+
 
 
     //______________________________________________________________________________________________ checkRequest
