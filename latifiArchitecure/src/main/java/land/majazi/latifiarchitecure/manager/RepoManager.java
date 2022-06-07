@@ -61,12 +61,12 @@ public class RepoManager {
         primaryCall.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                mutableLiveData.setValue(new ResponseModelManager().getResponse(getActivity(), response, isLoginRequest));
+                mutableLiveData.setValue(new ResponseModelManager().getResponse(getActivity(), response, isLoginRequest, ""));
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-                mutableLiveData.setValue(new ResponseModelManager().getResponse(getActivity(), null, isLoginRequest));
+                mutableLiveData.setValue(new ResponseModelManager().getResponse(getActivity(), null, isLoginRequest, t.getMessage()));
             }
         });
 

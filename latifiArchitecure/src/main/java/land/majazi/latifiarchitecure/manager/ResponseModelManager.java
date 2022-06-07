@@ -19,9 +19,9 @@ public class ResponseModelManager {
 
 
     //______________________________________________________________________________________________ getErrorMessage
-    public ResponseModel getResponse(Context context, Response response, boolean isLoginRequest) {
+    public ResponseModel getResponse(Context context, Response response, boolean isLoginRequest, String throwable) {
         if (response == null)
-            return checkResponseISNull(context);
+            return checkResponseISNull(context, throwable);
         else
             return checkResponseIsNotNull(context, response, isLoginRequest);
     }
@@ -29,12 +29,12 @@ public class ResponseModelManager {
 
 
     //______________________________________________________________________________________________ checkResponseISNull
-    private ResponseModel checkResponseISNull(Context context) {
+    private ResponseModel checkResponseISNull(Context context, String throwable) {
         InternetManager internetManager = new InternetManager();
         if (internetManager.connectionType(context) == EnumInternetConnection.NONE)
             return new ResponseModel(404, true, context.getResources().getString(R.string.internetNotAvailable), null);
         else
-            return new ResponseModel(404, true, context.getResources().getString(R.string.networkError), null);
+            return new ResponseModel(404, true, context.getResources().getString(R.string.networkError) + System.getProperty("line.separator") + throwable, null);
     }
     //______________________________________________________________________________________________ checkResponseISNull
 
