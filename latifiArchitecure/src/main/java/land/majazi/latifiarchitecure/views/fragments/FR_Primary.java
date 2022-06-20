@@ -80,6 +80,7 @@ public class FR_Primary extends Fragment implements FragmentAction{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        view.setAlpha(1);
         init(view);
         clickPressed();
         onViewCreated();
