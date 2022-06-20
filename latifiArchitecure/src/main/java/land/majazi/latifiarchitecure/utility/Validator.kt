@@ -36,7 +36,7 @@ class Validator {
         if (nationalCode.isNullOrEmpty())
             return false
 
-        if (nationalCode.length != 10 && !nationalCode.isDigitsOnly())
+        if (nationalCode.length != 10 || !nationalCode.isDigitsOnly())
             return false
 
         val revers = nationalCode.reversed()
@@ -117,7 +117,8 @@ class Validator {
     fun isCardNumber(cardNumber: String): Boolean {
         if (cardNumber.isNullOrEmpty())
             return false
-        if (cardNumber.length != 16)
+
+        if (cardNumber.length != 16 || !cardNumber.isDigitsOnly())
             return false
 
         val arrayCard: Array<Int> =
