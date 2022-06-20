@@ -282,6 +282,8 @@ public class FR_Primary extends Fragment implements FragmentAction{
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 doubleExitApplication = false;
+                if (getView() == null)
+                    return;
                 getView().setAlpha(1);
             }, 4000);
         }
