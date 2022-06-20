@@ -40,7 +40,7 @@ public class MLEditable extends LinearLayout {
     private LinearLayout linearLayoutLoading;
     private ImageView imageIcon;
     private ImageView imageIconLeft;
-
+    private boolean splitter = false;
     private Drawable iconError;
     private int decimalCont = 0;
     private textChangeInterface changeInterface;
@@ -156,6 +156,8 @@ public class MLEditable extends LinearLayout {
         InputFilter[] fArray = new InputFilter[1];
         fArray[0] = new InputFilter.LengthFilter(maxLength);
         editText.setFilters(fArray);
+
+        splitter = ta.getBoolean(R.styleable.MLEditable_splitter, false);
 
         inputType = ta.getInt(R.styleable.MLEditable_inputType, 0);
         if (inputType > 0)
@@ -287,7 +289,7 @@ public class MLEditable extends LinearLayout {
                     edit.setSelection(edit.getText().length());
                 }
 
-                if (ta.getBoolean(R.styleable.MLEditable_splitter, false)) {
+                if (splitter) {
                     String value = edit.getText().toString();
                     value = new Splitter().split(value);
                     Converter converter = new Converter();
@@ -389,7 +391,7 @@ public class MLEditable extends LinearLayout {
             text = "";
         }
 
-        if (ta.getBoolean(R.styleable.MLEditable_splitter, false)) {
+        if (splitter) {
             text = text.replaceAll(",", "");
             text = text.replaceAll("٬", "");
         }
@@ -618,4 +620,11 @@ public class MLEditable extends LinearLayout {
     //______________________________________________________________________________________________ setDecimalCont
 
 
+    public boolean isSplitter() {
+        return splitter;
+    }
+
+    public void setSplitter(boolean splitter) {
+        this.splitter = splitter;
+    }
 }
