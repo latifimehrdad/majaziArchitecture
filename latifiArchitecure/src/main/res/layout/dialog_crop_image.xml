@@ -57,7 +57,7 @@
 
     </LinearLayout>
 
-    <land.majazi.latifiarchitecure.views.customs.buttons.ML_Button
+    <land.majazi.latifiarchitecure.views.customs.buttons.MLButton
         android:id="@+id/ml_buttonCrop"
         android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"

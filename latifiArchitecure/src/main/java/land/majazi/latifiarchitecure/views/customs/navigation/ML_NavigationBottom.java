@@ -2,7 +2,6 @@ package land.majazi.latifiarchitecure.views.customs.navigation;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.animation.Animation;
@@ -21,12 +20,11 @@ import land.majazi.latifiarchitecure.R;
 
 public class ML_NavigationBottom extends LinearLayout {
 
-    private Context context;
+    private final Context context;
     private TypedArray ta;
-    private Drawable navBack;
     private List<MD_NavCell> navCells;
     public cellClick click;
-    private float scale = 0.85f;
+    private final float scale = 0.85f;
     private int current;
 
 
@@ -65,8 +63,7 @@ public class ML_NavigationBottom extends LinearLayout {
 
     //______________________________________________________________________________________________ configLayout
     private void configLayout() {
-        navBack = ta.getDrawable(R.styleable.ML_NavigationBottom_navBackground);
-        setBackground(navBack);
+        setBackground(ta.getDrawable(R.styleable.ML_NavigationBottom_navBackground));
         setGravity(Gravity.CENTER);
         setOrientation(HORIZONTAL);
         navCells = new ArrayList<>();
@@ -77,7 +74,6 @@ public class ML_NavigationBottom extends LinearLayout {
 
     //______________________________________________________________________________________________ addCell
     public void addCell(MD_NavModel navModel) {
-
         MD_NavCell md_navCell = new MD_NavCell();
         md_navCell.setId(navModel.getId());
         LinearLayout layout = new LinearLayout(context);
@@ -105,7 +101,6 @@ public class ML_NavigationBottom extends LinearLayout {
 
     //______________________________________________________________________________________________ configIcon
     private ImageView configIcon(MD_NavModel navModel) {
-
         ImageView imageIcon = new ImageView(context);
         int width = (int) (ta.getDimension(R.styleable.ML_NavigationBottom_navIconWidth, 0));
         int height = (int) (ta.getDimension(R.styleable.ML_NavigationBottom_navIconHeight, 0));
@@ -124,7 +119,6 @@ public class ML_NavigationBottom extends LinearLayout {
 
     //______________________________________________________________________________________________ configTitle
     private TextView configTitle(MD_NavModel navModel) {
-
         TextView textView = new TextView(context);
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         int textSize = (int) (ta.getDimensionPixelSize(R.styleable.ML_NavigationBottom_navTitleSize, 0) / getResources().getDisplayMetrics().density);

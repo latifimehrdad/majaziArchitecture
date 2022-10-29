@@ -1,11 +1,6 @@
 package land.majazi.latifiarchitecure.views.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.opengl.GLSurfaceView;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,13 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
@@ -29,7 +21,6 @@ import com.daasuu.camerarecorder.LensFacing;
 import java.io.File;
 
 import land.majazi.latifiarchitecure.R;
-import land.majazi.latifiarchitecure.utility.file.FileController;
 
 public class RecordVideo extends AppCompatActivity {
 
@@ -49,7 +40,7 @@ public class RecordVideo extends AppCompatActivity {
     Runnable runnableTime;
     String filePath;
     boolean recording;
-    int seconds = 10;
+    int seconds = 25;
     int time;
     String text;
 
@@ -58,6 +49,8 @@ public class RecordVideo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record_video);
+        if (getIntent().getExtras() != null)
+            seconds = getIntent().getIntExtra("second", 25);
         video_preview = (VideoView) findViewById(R.id.vv_playback);
     }
     //______________________________________________________________________________________________ onCreate
@@ -76,7 +69,7 @@ public class RecordVideo extends AppCompatActivity {
         imageViewRetry = findViewById(R.id.imageViewRetry);
         textViewTime = findViewById(R.id.textViewTime);
         textViewText = findViewById(R.id.textViewText);
-        imageViewRecord.setImageDrawable(getResources().getDrawable(R.drawable.dw_back_video_record));
+        imageViewRecord.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dw_back_video_record, getTheme()));
         imageViewRecord.setOnClickListener(v -> recordClick());
         imageViewSwitch.setOnClickListener(v -> switchCamera());
         imageViewOk.setOnClickListener(v -> endRecording());
@@ -128,7 +121,6 @@ public class RecordVideo extends AppCompatActivity {
         refreshRecord();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            imageViewSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_rear_white_24dp));
             lensFacing = LensFacing.FRONT;
             initCamera();
         }, 500);
@@ -141,7 +133,6 @@ public class RecordVideo extends AppCompatActivity {
         refreshRecord();
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            imageViewSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_camera_front_white_24dp));
             lensFacing = LensFacing.BACK;
             initCamera();
         }, 500);
@@ -164,7 +155,7 @@ public class RecordVideo extends AppCompatActivity {
     private void startRecord() {
         recording = true;
         cameraRecorder.start(filePath);
-        imageViewRecord.setImageDrawable(getResources().getDrawable(R.drawable.dw_back_video_record_stop));
+        imageViewRecord.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dw_back_video_record_stop, getTheme()));
         imageViewSwitch.setVisibility(View.INVISIBLE);
         linearLayoutFinish.setVisibility(View.INVISIBLE);
         startTimeElapse();
@@ -176,7 +167,7 @@ public class RecordVideo extends AppCompatActivity {
     private void stopRecord() {
         recording = false;
         cameraRecorder.stop();
-        imageViewRecord.setImageDrawable(getResources().getDrawable(R.drawable.dw_back_video_record));
+        imageViewRecord.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.dw_back_video_record, getTheme()));
         imageViewSwitch.setVisibility(View.INVISIBLE);
         imageViewRecord.setVisibility(View.INVISIBLE);
         linearLayoutFinish.setVisibility(View.VISIBLE);
@@ -201,12 +192,7 @@ public class RecordVideo extends AppCompatActivity {
             video_preview.setVideoPath(filePath);
             video_preview.setKeepScreenOn(true);
             video_preview.setMediaController(new MediaController(this));
-            video_preview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                }
-            });
+            video_preview.setOnCompletionListener(mp -> { });
             video_preview.setVisibility(View.VISIBLE);
             video_preview.start();
         }, 500);
@@ -233,7 +219,7 @@ public class RecordVideo extends AppCompatActivity {
                 handlerTime = null;
                 runnableTime = null;
 
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         });

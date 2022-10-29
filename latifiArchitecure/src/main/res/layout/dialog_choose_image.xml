@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDialogTitle">
 
 
-        <land.majazi.latifiarchitecure.views.customs.buttons.ML_Button
+        <land.majazi.latifiarchitecure.views.customs.buttons.MLButton
             android:id="@+id/ml_buttonTakePhoto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             app:normalBack="@drawable/dw_back_button"/>
 
 
-        <land.majazi.latifiarchitecure.views.customs.buttons.ML_Button
+        <land.majazi.latifiarchitecure.views.customs.buttons.MLButton
             android:id="@+id/ml_buttonGallery"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -4,9 +4,13 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,7 +28,7 @@ public class RetrofitModule {
 
     public retrofit2.Retrofit getRetrofit() {
 
-        OkHttpClient okHttpClient = getOkHttpClient(getCache(getFile()), getHttpLoggingInterceptor());
+        OkHttpClient okHttpClient = getOkHttpClient(getCache(getFile()), getHttpLoggingInterceptor(), getInterceptor());
 
         return new retrofit2.Retrofit.Builder()
                 .baseUrl(Host)
@@ -36,15 +40,28 @@ public class RetrofitModule {
 
 
 
-    public OkHttpClient getOkHttpClient(Cache cache, HttpLoggingInterceptor interceptor) {
+    public OkHttpClient getOkHttpClient(Cache cache, HttpLoggingInterceptor loggingInterceptor, Interceptor interceptor) {
 
         return new OkHttpClient.Builder()
                 .cache(cache)
-                .addNetworkInterceptor(interceptor)
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20,TimeUnit.SECONDS)
+                .addNetworkInterceptor(loggingInterceptor)
+                .addInterceptor(interceptor)
+                .readTimeout(1,TimeUnit.MINUTES)
                 .writeTimeout(3,TimeUnit.MINUTES)
                 .build();
+    }
+
+
+    public Interceptor getInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request newRequest  = chain.request().newBuilder()
+                        .addHeader("device", "android" )
+                        .build();
+                return chain.proceed(newRequest);
+            }
+        };
     }
 
     public HttpLoggingInterceptor getHttpLoggingInterceptor() {

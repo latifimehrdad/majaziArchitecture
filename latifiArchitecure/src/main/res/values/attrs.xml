@@ -40,7 +40,7 @@
     <attr name="charMark" format="string"/>
 
 
-    <declare-styleable name="ML_Toast">
+    <declare-styleable name="MLToast">
 
         <attr name="toast_Back" format="reference|color" />
         <attr name="toast_TextColor" format="color"/>
@@ -49,15 +49,13 @@
         <attr name="toast_maxWidth" format="dimension"/>
         <attr name="fontFamily"/>
 
-        <attr name="toast_imgWidth" format="dimension"  />
-        <attr name="toast_imgHeight" format="dimension"  />
-
     </declare-styleable>
 
 
-    <declare-styleable name="ML_Editable">
+    <declare-styleable name="MLEditable">
         <attr name="normalBack" format="reference|color" />
         <attr name="emptyBack" format="reference|color" />
+        <attr name="fontFamily"/>
         <attr name="android:textColor"/>
         <attr name="hint" format="string"/>
         <attr name="waitingText"/>
@@ -65,7 +63,6 @@
         <attr name="maxLine" format="integer"/>
         <attr name="maxLength" format="integer"/>
         <attr name="errorText" format="string"/>
-        <attr name="fontFamily" />
         <attr name="splitter" format="boolean"/>
         <attr name="inputType">
             <flag name="none" value="0x00000000" />
@@ -108,18 +105,14 @@
             <enum name="email" value="3" />
             <enum name="national" value="4" />
             <enum name="password" value="5" />
-            <enum name="mobileWithoutAreaCode" value="6" />
             <enum name="phone" value="7"/>
             <enum name="wallet" value="10"/>
             <enum name="shaba" value="11"/>
             <enum name="price" value="12"/>
-            <enum name="numberInteger" value="13"/>
-            <enum name="numberDecimal" value="14"/>
             <enum name="postalCode" value="15"/>
             <enum name="cardNumber" value="16"/>
             <enum name="persianName" value="17"/>
         </attr>
-
         <attr name="gravity">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
@@ -161,7 +154,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_TextView">
+    <declare-styleable name="MLTextView">
         <attr name="normalBack"/>
         <attr name="emptyBack"/>
         <attr name="android:textColor"/>
@@ -190,7 +183,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_Button">
+    <declare-styleable name="MLButton">
         <attr name="normalBack"/>
         <attr name="android:textColor"/>
         <attr name="waitingBack" format="reference|color" />
@@ -222,7 +215,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="ML_AnimationTime">
+    <declare-styleable name="MLAnimationTime">
         <attr name="normalBack"/>
         <attr name="textSize"/>
         <attr name="android:textColor"/>
@@ -262,9 +255,7 @@
         <attr name="alertAttentionIcon" format="reference" />
         <attr name="alertAttentionColor" format="color" />
         <attr name="alertTitleTextSize" format="dimension"/>
-        <attr name="alertTitleFontFamily" format="reference"/>
         <attr name="alertMessageTextSize" format="dimension"/>
-        <attr name="alertMessageFontFamily" format="reference"/>
 
     </declare-styleable>
 

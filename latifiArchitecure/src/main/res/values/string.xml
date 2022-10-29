@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="unAuthorization">لطفا مجدد وارد برنامه شوید</string>
+    <string name="unAuthorizationTokenExpire">لطفا مجدد وارد برنامه شوید</string>
     <string name="internetNotAvailable">اینترنت در دسترس نمیباشد</string>
-    <string name="networkError">خطای ارتباط با سرور، ممکن است سرور در حال بروزرسانی باشد، لطفا لحظات دیگری تلاش کنید</string>
+    <string name="networkError">خطای دور از انتظاری رخ داده است</string>
     <string name="readTheTextBelow">متن زیر را در هنگام ضبط فیلم بخوانید.</string>
     <string name="doubleExit">برای خروج 2 بار کلید بازگشت را بزنید</string>
     <string name="titleVideoRecording">متن زیر را در هنگام فیلم برداری بخوانید</string>
@@ -18,8 +18,7 @@
     <string name="sharedPreferencesBlurry">blurry</string>
     <string name="sharedPreferencesToken">token</string>
 
-
-
+    <string name="unAuthorization">کاربر عزیز، شما دسترسی به این بخش را ندارید</string>
     <string name="cancel_label">Cancel</string>
     <string name="ok_label">Ok</string>
 
