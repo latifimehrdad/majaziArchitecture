@@ -46,8 +46,7 @@ public class RetrofitManager {
                 .cache(cache)
                 .addNetworkInterceptor(loggingInterceptor)
                 .addInterceptor(interceptor)
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20,TimeUnit.SECONDS)
+                .readTimeout(1,TimeUnit.MINUTES)
                 .writeTimeout(3,TimeUnit.MINUTES)
                 .build();
     }

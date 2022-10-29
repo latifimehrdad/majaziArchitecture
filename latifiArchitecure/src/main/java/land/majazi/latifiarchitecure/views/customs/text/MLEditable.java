@@ -151,6 +151,8 @@ public class MLEditable extends LinearLayout {
 
         int maxLine = ta.getInteger(R.styleable.MLEditable_maxLine, 1);
         editText.setMaxLines(maxLine);
+        if (maxLine > 1)
+            editText.setVerticalScrollBarEnabled(true);
 
         int maxLength = ta.getInteger(R.styleable.MLEditable_maxLength, 1);
         InputFilter[] fArray = new InputFilter[1];
